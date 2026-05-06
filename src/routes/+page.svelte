@@ -3,6 +3,7 @@
     import { Data } from "$lib/data";
     import '@bootstrap-wc/components';
     import langs from "$lib/data/langs.json"
+    import { resolve } from "$app/paths";
 
     let serverURL = $state("/")
     let data = $state(Data.load())
@@ -15,20 +16,39 @@
         console.log(data.language)
     })
 </script>
-<main>
+<main class="container">
+<div class="row">
     <h1>linux-web-install</h1>
-    <bs-card heading="Langauge & Keymap">
+    <bs-card heading="Langauge" class="bg-dark text-white m-3 col">
         <p>Language: 
             {#if data.language === "-- Select a Language --"}
-                <span class="text-danger">No Language selected!</span>
+                <span class="text-danger text-underline" style="text-decoration: underline;">No Language selected!</span>
             {:else}
                 {Object.entries(langs).find((x)=> x[0] === data.language)?.[1]}
             {/if}
         </p>
-        <p>Keymap: {data.keymap}</p>
+        <bs-button href={resolve("/lang")}>Edit</bs-button>
     </bs-card>
-    <bs-card>gamer</bs-card>
-    <bs-card>gamer</bs-card>
-    <bs-card>gamer</bs-card>
-    <bs-card>gamer</bs-card>
+    <bs-card heading="Location & Timezone" class="bg-dark text-white m-3 col">
+        <p>text</p>
+        <bs-button href={resolve("/timezone")}>Edit</bs-button>
+    </bs-card>
+    <bs-card heading="Disks" class="bg-dark text-white m-3 col">
+        <p>text</p>
+        <bs-button href={resolve("/disks")}>Edit</bs-button>
+    </bs-card>
+    </div>
+    <div class="row">
+    <bs-card heading="Additional Software" class="bg-dark text-white m-3 col">
+        <p>text</p>
+        <bs-button href={resolve("/packages")}>Edit</bs-button>
+    </bs-card>
+    <bs-card heading="Users" class="bg-dark text-white m-3 col">
+        <p>text</p>
+        <bs-button href={resolve("/users")}>Edit</bs-button>
+    </bs-card>
+    <bs-card heading="Finish" class="bg-dark text-white m-3 col">
+        <bs-button href={resolve("/install")} variant="danger">Continiue</bs-button>
+    </bs-card>
+    </div>
 </main>

@@ -9,7 +9,7 @@
         <NavbarItem href="/" content="Overview"></NavbarItem>
         <NavbarItem href="/lang" content="Language"></NavbarItem>
         <NavbarItem href="/timezone" content="Location & Timezone"></NavbarItem>
-        <NavbarItem href="/disks" content="Disks & Partitions"></NavbarItem>
+        <NavbarItem href="/disks" content="Disks"></NavbarItem>
         <NavbarItem href="/packages" content="Additional Software"></NavbarItem>
         <NavbarItem href="/users" content="Users"></NavbarItem>
     </bs-nav>
