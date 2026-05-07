@@ -7,23 +7,18 @@
     const langValues = Object.entries(langs)
 
     let selectedLang = $state("")
-    let selectedKeymap = $state("")
 
     onMount(()=>{
         const data = Data.load()
         selectedLang = data.language 
-        selectedKeymap = data.keymap
     })
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function onLanguageChange(e: any) {
         selectedLang = e.target.value
         let data = Data.load()
         data.language = $state.snapshot(selectedLang)
         data.save()
-    }
-
-    function onKeymapChange(e: any) {
-
     }
 </script>
 <main>
