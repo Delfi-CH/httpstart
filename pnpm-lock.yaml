@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@bootstrap-wc/components':
-        specifier: ^0.5.0
-        version: 0.5.0(lit@3.3.2)
+      '@sveltestrap/sveltestrap':
+        specifier: ^7.1.0
+        version: 7.1.0(svelte@5.55.5(@typescript-eslint/types@8.59.2))
       axios:
         specifier: ^1.16.0
         version: 1.16.0
@@ -81,16 +81,6 @@ importers:
 
 packages:
 
-  '@bootstrap-wc/components@0.5.0':
-    resolution: {integrity: sha512-pRxGs5QDFjsGYtVIWDUdfmz3MpEAA/8WgG8+g21k+b9buupZYB3mvD7r0QgpEsAMfzAHB47Hte28a0xeETnL3A==}
-    peerDependencies:
-      lit: ^3.0.0
-
-  '@bootstrap-wc/core@0.5.0':
-    resolution: {integrity: sha512-tOhANnKgrM0HiWR32HBNm6T89Qm8MRNhXwiWkZUE6JBK61rB2I9Pd5cn/ZkCcB7o35VsSIwcA718k39nIpyaNw==}
-    peerDependencies:
-      lit: ^3.0.0
-
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
 
@@ -147,15 +137,6 @@ packages:
   '@eslint/plugin-kit@0.7.1':
     resolution: {integrity: sha512-rZAP3aVgB9ds9KOeUSL+zZ21hPmo8dh6fnIFwRQj5EAZl9gzR7wxYbYXYysAM8CTqGmUGyp2S4kUdV17MnGuWQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
-
-  '@floating-ui/core@1.7.5':
-    resolution: {integrity: sha512-1Ih4WTWyw0+lKyFMcBHGbb5U5FtuHJuujoyyr5zTaWS5EYMeT6Jb2AuDeftsCsEuchO+mM2ij5+q9crhydzLhQ==}
-
-  '@floating-ui/dom@1.7.6':
-    resolution: {integrity: sha512-9gZSAI5XM36880PPMm//9dfiEngYoC6Am2izES1FF406YFsjvyBMmeJ2g4SAju3xWwtuynNRFL2s9hgxpLI5SQ==}
-
-  '@floating-ui/utils@0.2.11':
-    resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -341,6 +322,11 @@ packages:
     peerDependencies:
       svelte: ^5.46.4
       vite: ^8.0.0-beta.7 || ^8.0.0
+
+  '@sveltestrap/sveltestrap@7.1.0':
+    resolution: {integrity: sha512-TpIx25kqLV+z+VD3yfqYayOI1IaCeWFbT0uqM6NfA4vQgDs9PjFwmjkU4YEAlV/ngs9e7xPmaRWE7lkrg4Miow==}
+    peerDependencies:
+      svelte: ^4.0.0 || ^5.0.0 || ^5.0.0-next.0
 
   '@tybys/wasm-util@0.10.2':
     resolution: {integrity: sha512-RoBvJ2X0wuKlWFIjrwffGw1IqZHKQqzIchKaadZZfnNpsAYp2mM0h36JtPCjNDAHGgYez/15uMBpfGwchhiMgg==}
@@ -744,9 +730,6 @@ packages:
 
   flatted@3.4.2:
     resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
-
-  focus-trap@7.8.0:
-    resolution: {integrity: sha512-/yNdlIkpWbM0ptxno3ONTuf+2g318kh2ez3KSeZN5dZ8YC6AAmgeWz+GasYYiBJPFaYcSAPeu4GfhUaChzIJXA==}
 
   follow-redirects@1.16.0:
     resolution: {integrity: sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==}
@@ -1236,9 +1219,6 @@ packages:
     resolution: {integrity: sha512-2uCs/LZ9us+AktdzYJM8OcxQ8qnPS1kpaO7syGT/MgO+6Qr1Ybl+TqPq+97u7PHqmmMlye5ZkoyXONy5mjjAbw==}
     engines: {node: '>=18'}
 
-  tabbable@6.4.0:
-    resolution: {integrity: sha512-05PUHKSNE8ou2dwIxTngl4EzcnsCDZGJ/iCLtDflR/SHB/ny14rXc+qU5P4mG9JkusiV7EivzY9Mhm55AzAvCg==}
-
   tinyglobby@0.2.16:
     resolution: {integrity: sha512-pn99VhoACYR8nFHhxqix+uvsbXineAasWm5ojXoN8xEwK5Kd3/TrhNn1wByuD52UxWRLy8pu+kRMniEi6Eq9Zg==}
     engines: {node: '>=12.0.0'}
@@ -1373,19 +1353,6 @@ packages:
 
 snapshots:
 
-  '@bootstrap-wc/components@0.5.0(lit@3.3.2)':
-    dependencies:
-      '@bootstrap-wc/core': 0.5.0(lit@3.3.2)
-      '@floating-ui/dom': 1.7.6
-      focus-trap: 7.8.0
-      lit: 3.3.2
-
-  '@bootstrap-wc/core@0.5.0(lit@3.3.2)':
-    dependencies:
-      '@floating-ui/dom': 1.7.6
-      focus-trap: 7.8.0
-      lit: 3.3.2
-
   '@emnapi/core@1.10.0':
     dependencies:
       '@emnapi/wasi-threads': 1.2.1
@@ -1441,17 +1408,6 @@ snapshots:
     dependencies:
       '@eslint/core': 1.2.1
       levn: 0.4.1
-
-  '@floating-ui/core@1.7.5':
-    dependencies:
-      '@floating-ui/utils': 0.2.11
-
-  '@floating-ui/dom@1.7.6':
-    dependencies:
-      '@floating-ui/core': 1.7.5
-      '@floating-ui/utils': 0.2.11
-
-  '@floating-ui/utils@0.2.11': {}
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -1596,6 +1552,11 @@ snapshots:
       svelte: 5.55.5(@typescript-eslint/types@8.59.2)
       vite: 8.0.10(@types/node@22.19.17)
       vitefu: 1.1.3(vite@8.0.10(@types/node@22.19.17))
+
+  '@sveltestrap/sveltestrap@7.1.0(svelte@5.55.5(@typescript-eslint/types@8.59.2))':
+    dependencies:
+      '@popperjs/core': 2.11.8
+      svelte: 5.55.5(@typescript-eslint/types@8.59.2)
 
   '@tybys/wasm-util@0.10.2':
     dependencies:
@@ -2071,10 +2032,6 @@ snapshots:
 
   flatted@3.4.2: {}
 
-  focus-trap@7.8.0:
-    dependencies:
-      tabbable: 6.4.0
-
   follow-redirects@1.16.0: {}
 
   form-data@4.0.5:
@@ -2549,8 +2506,6 @@ snapshots:
       zimmerframe: 1.1.4
     transitivePeerDependencies:
       - '@typescript-eslint/types'
-
-  tabbable@6.4.0: {}
 
   tinyglobby@0.2.16:
     dependencies:

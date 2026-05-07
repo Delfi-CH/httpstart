@@ -2,7 +2,7 @@
     import { Data } from "$lib/data";
     import langs from "$lib/data/langs.json";
     import { onMount } from "svelte";
-    import '@bootstrap-wc/components';
+    import { Input } from "@sveltestrap/sveltestrap";
 
     const langValues = Object.entries(langs)
 
@@ -24,10 +24,10 @@
 <main>
     <h1>lang</h1>
     <h2>Language</h2>
-    <bs-select onchange={onLanguageChange} value={selectedLang}>
+    <Input type="select" onchange={onLanguageChange} bind:value={selectedLang}>
         <option selected={selectedLang === ""}>-- Select a Language --</option>
         {#each langValues as lang (lang) }
             <option value={lang[0]} selected={selectedLang === lang[0]}>{lang[1]}</option>
         {/each}
-    </bs-select>
+    </Input>
 </main>

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Data, User } from "$lib/data";
     import { onMount } from "svelte";
-    import '@bootstrap-wc/components';
+    import { Input } from "@sveltestrap/sveltestrap"
 
     let users: Array<User> = $state([])
     let hostname = $state("")
@@ -28,5 +28,5 @@
     <h1>users & hostname</h1>
     <h2>Users</h2>
     <h3>Hostname</h3>
-    <bs-input type="text" oninput={handleHostnameChange} value="" placeholder="e.g. ubuntu-server" valid={hostnameIsValid}></bs-input>
+    <Input type="text" oninput={handleHostnameChange} bind:value={hostname} placeholder="e.g. ubuntu-server" valid={hostnameIsValid}></Input>
 </main>

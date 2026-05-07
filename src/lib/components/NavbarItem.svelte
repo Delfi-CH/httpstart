@@ -1,14 +1,14 @@
 <script lang="ts">
     import { resolve } from '$app/paths';
     import { page } from '$app/state';
-    import '@bootstrap-wc/components';
+    import { NavItem, NavLink } from '@sveltestrap/sveltestrap';
 
     let { href, content } = $props()
-    const currentPage = page.route.id
+    const isActive = $derived(page.route.id === href)
 
 </script>
 <main>
-    <bs-nav-item href={resolve(href)} active={href === currentPage}>
-        {content}
-    </bs-nav-item>
+    <NavItem active={isActive}>
+        <NavLink href={resolve(href)} active={isActive} class={isActive ? 'bg-dark text-white' : 'text-light'}>{content}</NavLink>
+    </NavItem>
 </main>
