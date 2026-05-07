@@ -25,7 +25,7 @@
     }
 </script>
 <main>
-    <h1>users & hostname</h1>
+    <h1>Users & Hostname</h1>
     <h2>Users</h2>
     <h3>Hostname</h3>
     <Input type="text" oninput={handleHostnameChange} bind:value={hostname} placeholder="e.g. ubuntu-server" valid={hostnameIsValid}></Input>
