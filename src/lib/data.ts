@@ -2,16 +2,21 @@ class User {
     username: string
     password: string
     sudo: boolean
-    constructor(username: string, password: string, sudo: boolean) {
+    ssh: boolean
+    constructor(username: string, password: string, sudo: boolean, ssh: boolean) {
         this.username = username
         this.password = password
         this.sudo = sudo
+        this.ssh = ssh
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static fromJSON(obj: any): User {
         return new User(
             obj.username,
             obj.password,
-            obj.sudo
+            obj.sudo,
+            obj.ssh
         )
     }
 }
@@ -51,6 +56,7 @@ class Disk {
         this.filesystem = filesystem
     }
     
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static fromJSON(obj: any): Disk {
         return new Disk(
             obj.name,
@@ -87,6 +93,8 @@ class Data {
         const parsed = raw ? Data.fromJSON(JSON.parse(raw)) : new Data("", "", "", [], "", [], [])
         return parsed
     }
+    
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static fromJSON(obj: any): Data {
     return new Data(
       obj.language,

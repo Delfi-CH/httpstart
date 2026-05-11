@@ -12,6 +12,7 @@
         selectedTimezone = data.timezone
     })
 
+    //eslint-disable-next-line
     function handleTimezoneChange(e: any) {
         let tmpTimezone = e.target.value
         if (tmpTimezone.startsWith("Other/")) {

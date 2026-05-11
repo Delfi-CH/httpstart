@@ -40,7 +40,7 @@
         check2 = !(data.timezone === undefined || data.timezone === null || data.timezone === "")
         check3 = true
         check4 = true
-        check5a = true
+        check5a = (data.users.length < 1)
         check5b = !(data.hostname === undefined || data.hostname === null || data.hostname === "")
         if (check1 && check2 && check3 && check4 && check5a && check5b) {
             allIsOk = true
@@ -129,6 +129,20 @@
                     <CardTitle>Users & Hostname {#if check5a && check5b}✔️{:else}❌{/if}</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
+                    <p>Users : 
+                        {#if data.users.length < 1}
+                            <span
+                                class="text-danger text-underline"
+                                style="text-decoration: underline;"
+                                >No Users created!</span
+                            >
+                        {:else}
+                            {#each data.users as user, index (index)}
+                                {user.username}
+                                <span> </span>
+                            {/each}
+                        {/if}
+                    </p>
                     <p>
                         Hostname:
                         {#if data.hostname === undefined || data.hostname === null || data.hostname === ""}
