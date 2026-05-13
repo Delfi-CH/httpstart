@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# 13.05.2026 Delfi-CH
+
+# Description
+# Launcher script for the linux-web-installer
+
+# Params:
+# none
+
+# Usage:
+# Best invoked via package.json
+# ./linux-web-installer
+
+# Returns:
+# 0: All good
+# 1: Error
