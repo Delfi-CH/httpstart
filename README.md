@@ -1,6 +1,8 @@
-# linux-web-installer
+# httpstart
 
-## Supported Distros
+Web-based installer for Linux Distributions 
+
+## Supported Distributions
 
 ### Current
 
