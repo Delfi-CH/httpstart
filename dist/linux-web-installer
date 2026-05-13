@@ -5,12 +5,77 @@
 # Launcher script for the linux-web-installer
 
 # Params:
-# none
+# index: Path to index.cjs file
+# uipath: Path to the ui folder
 
 # Usage:
-# Best invoked via package.json
-# ./linux-web-installer
-
+# ./linux-web-installer <path/to/index.cjs> <path/to/ui>
+ 
 # Returns:
 # 0: All good
-# 1: Error
+# 1: NodeJS not found or bad version
+# 2: Port 29222 in use
+# 3: Invalid Params
+# Else: Error
+
+index=$1
+uipath=$2
+
+if [ -z "$index" ]; then
+    echo "Path to index.cjs was not specified!"
+    echo "Aborting..."
+    exit 3
+fi
+
+if [ -z "$uipath" ]; then
+    echo "Path to ui directory was not specified!"
+    echo "Aborting..."
+    exit 3
+fi
+
+if [ ! -e "$index" ]; then
+    echo "$index was not found"
+    echo "Aborting..."
+    exit 3
+fi
+
+if [ ! -e "$uipath" ]; then
+    echo "$uipath was not found"
+    echo "Aborting..."
+    exit 3
+fi
+
+type node &> /dev/null
+status=$?
+
+if [ "$status" != 0 ]; then
+    echo "NodeJS wasnt found in \$PATH!"
+    echo "Aborting..."
+    exit 1
+fi
+
+echo "NodeJS found in path..."
+
+version=$(node --version)
+regex=^v[2-9][2-9].[0-9].[0-9]$
+if [[ "$version" =~ $regex ]]; then
+    echo "NodeJS version is ok"
+else
+    echo "Bad NodeJS version $version! Please use NodeJS 22 or later."
+    exit 1
+fi
+
+echo "Checking if port 29222 is open..."
+lsof -Pi :29222 -sTCP:LISTEN -t
+status=$?
+if [ "$status" != 1 ]; then
+    echo "Port 29222 is already in use!"
+    echo "Aborting..."
+    exit 2
+fi
+
+node $index 29222 $uipath
+status=$?
+
+echo "Exiting with status $status"
+exit $status

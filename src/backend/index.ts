@@ -1,12 +1,13 @@
 import express from "express";
+import { argv } from "node:process";
 import cors from "cors";
 import {getDiskInformation} from "./getDisks.ts"
 
 const app = express();
 app.use(cors())
-app.use("/ui", express.static("build"))
+app.use("/ui", express.static(argv[3]))
 
-const port = 29222;
+const port = Number(argv[2]);
 app.get("/api", (req, res)=> {
     res.send("hello, world")
 })
@@ -16,5 +17,5 @@ app.get("/api/disks", (req, res)=> {
 })
 
 app.listen(port, "0.0.0.0", ()=>{
-    console.log("server running")
+    console.log("Server running on port " + port)
 })
