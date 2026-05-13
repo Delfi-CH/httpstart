@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@sveltestrap/sveltestrap': a86b91b2fe61fa25483b97cb9b85f162aa1bca26d9f10061f4a95cec27f3b8f9
+
 importers:
 
   .:
@@ -13,16 +16,10 @@ importers:
         version: 2.0.3
       '@sveltestrap/sveltestrap':
         specifier: ^7.1.0
-        version: 7.1.0(svelte@5.55.5(@typescript-eslint/types@8.59.3))
+        version: 7.1.0(patch_hash=a86b91b2fe61fa25483b97cb9b85f162aa1bca26d9f10061f4a95cec27f3b8f9)(svelte@5.55.5(@typescript-eslint/types@8.59.3))
       axios:
         specifier: ^1.16.0
         version: 1.16.0
-      bootstrap:
-        specifier: ^5.3.8
-        version: 5.3.8(@popperjs/core@2.11.8)
-      bootswatch:
-        specifier: ^5.3.8
-        version: 5.3.8
       cors:
         specifier: ^2.8.6
         version: 2.8.6
@@ -647,14 +644,6 @@ packages:
   body-parser@2.2.2:
     resolution: {integrity: sha512-oP5VkATKlNwcgvxi0vM0p/D3n2C3EReYVX+DNYs5TjZFn/oQt2j+4sVJtSMr18pdRr8wjTcBl6LoV+FUwzPmNA==}
     engines: {node: '>=18'}
-
-  bootstrap@5.3.8:
-    resolution: {integrity: sha512-HP1SZDqaLDPwsNiqRqi5NcP0SSXciX2s9E+RyqJIIqGo+vJeN5AJVM98CXmW/Wux0nQ5L7jeWUdplCEf0Ee+tg==}
-    peerDependencies:
-      '@popperjs/core': ^2.11.8
-
-  bootswatch@5.3.8:
-    resolution: {integrity: sha512-88mnH9tv+x6DV+scBxYFOpM4YSDVhyfEgbhqaEfvkHNctKI9qRcACxIP9nmBZ5mSeLXtsgax1VsRkUs1eWjlAQ==}
 
   brace-expansion@5.0.6:
     resolution: {integrity: sha512-kLpxurY4Z4r9sgMsyG0Z9uzsBlgiU/EFKhj/h91/8yHu0edo7XuixOIH3VcJ8kkxs6/jPzoI6U9Vj3WqbMQ94g==}
@@ -1813,7 +1802,7 @@ snapshots:
       vite: 8.0.12(@types/node@22.19.19)(esbuild@0.28.0)
       vitefu: 1.1.3(vite@8.0.12(@types/node@22.19.19)(esbuild@0.28.0))
 
-  '@sveltestrap/sveltestrap@7.1.0(svelte@5.55.5(@typescript-eslint/types@8.59.3))':
+  '@sveltestrap/sveltestrap@7.1.0(patch_hash=a86b91b2fe61fa25483b97cb9b85f162aa1bca26d9f10061f4a95cec27f3b8f9)(svelte@5.55.5(@typescript-eslint/types@8.59.3))':
     dependencies:
       '@popperjs/core': 2.11.8
       svelte: 5.55.5(@typescript-eslint/types@8.59.3)
@@ -2016,12 +2005,6 @@ snapshots:
       type-is: 2.0.1
     transitivePeerDependencies:
       - supports-color
-
-  bootstrap@5.3.8(@popperjs/core@2.11.8):
-    dependencies:
-      '@popperjs/core': 2.11.8
-
-  bootswatch@5.3.8: {}
 
   brace-expansion@5.0.6:
     dependencies:
