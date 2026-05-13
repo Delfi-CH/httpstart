@@ -1,6 +1,6 @@
 # Maintainer: Delfi-CH <delfi@delfi.dev>
 
-pkgname=linux-web-installer
+pkgname=httpstart
 pkgver=1
 pkgrel=1
 pkgdesc="Network installer"
@@ -10,8 +10,8 @@ license=('GPL-3.0-or-later')
 
 depends=('nodejs')
 
-provides=('linux-web-installer')
-conflicts=('linux-web-installer')
+provides=('httpstart')
+conflicts=('httpstart')
 
 source=("")
 sha256sums=('SKIP')

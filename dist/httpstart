@@ -23,14 +23,14 @@ uipath=$2
 
 if [ -z "$index" ]; then
     echo "Path to index.cjs was not specified!"
-    echo "Aborting..."
-    exit 3
+    echo "Assuming index.cjs at /usr/share/httpstart/index.cjs"
+    index="/usr/share/httpstart/index.cjs"
 fi
 
 if [ -z "$uipath" ]; then
     echo "Path to ui directory was not specified!"
-    echo "Aborting..."
-    exit 3
+    echo "Assuming ui directory at /usr/share/httpstart/ui"
+    uipath="/usr/share/httpstart/ui"
 fi
 
 if [ ! -e "$index" ]; then

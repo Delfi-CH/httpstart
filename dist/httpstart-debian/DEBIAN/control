@@ -1,0 +1,9 @@
+Package: node-httpstart
+Version: 1.0
+Section: admin
+Priority: optional
+Architecture: all
+Maintainer: Delfi-CH <delfi@delfi.dev>
+Description: Web-based installer for Linux Distributions
+    A web-based installer that provides a graphical interface via http
+    for installing various Linux Distributions.

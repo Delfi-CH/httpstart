@@ -25,3 +25,11 @@ vite.config.ts.timestamp-*
 
 /dist/*.cjs
 /dist/ui
+
+/dist/httpstart-debian/usr/bin
+/dist/httpstart-debian/usr/share
+
+/dist/*.deb
+/dist/*.rpm
+/dist/*.tar.gz
+/dist/*.tar.zstd
