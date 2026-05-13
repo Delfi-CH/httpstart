@@ -31,7 +31,7 @@
     onMount(() => {
         const mode = import.meta.env.MODE;
         if (mode === "development") {
-            serverURL = "http://localhost:29222/";
+            serverURL = "http://localhost:29222";
         }
         data = Data.load();
     });

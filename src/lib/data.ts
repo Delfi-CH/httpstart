@@ -45,14 +45,14 @@ enum Filesystem {
 class Disk {
     name: string
     size: string
-    mountpoint: string
+    mountpoints: Array<string>
     filesystem: Filesystem
     type: DiskType = DiskType.any
-    constructor(name: string, size: string, type: DiskType, mountpoint: string, filesystem: Filesystem) {
+    constructor(name: string, size: string, type: DiskType, mountpoints: Array<string>, filesystem: Filesystem) {
         this.name = name
         this.size = size
         this.type = type
-        this.mountpoint = mountpoint
+        this.mountpoints = mountpoints
         this.filesystem = filesystem
     }
     
@@ -68,6 +68,15 @@ class Disk {
     }
 }
 
+class ParentDisk {
+    name: string
+    size: string
+    constructor(name: string, size: string) {
+        this.name = name
+        this.size = size
+    }
+}
+
 class Data {
     language: string
     timezone: string
@@ -76,7 +85,8 @@ class Data {
     hostname: string
     users: Array<User>
     disks: Array<Disk>
-    constructor(language: string, timezone: string, keymap:string, packages: Array<string>, hostname: string, users: Array<User>, disks: Array<Disk>) {
+    parentDisks: Array<ParentDisk>
+    constructor(language: string, timezone: string, keymap:string, packages: Array<string>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>) {
         this.language = language
         this.timezone = timezone
         this.keymap = keymap
@@ -84,13 +94,14 @@ class Data {
         this.hostname = hostname
         this.users = users
         this.disks = disks
+        this.parentDisks = parentDisks
     }
     save() {
         localStorage.setItem("data", JSON.stringify(this))
     }
     static load() {
         const raw = localStorage.getItem("data")
-        const parsed = raw ? Data.fromJSON(JSON.parse(raw)) : new Data("", "", "", [], "", [], [])
+        const parsed = raw ? Data.fromJSON(JSON.parse(raw)) : new Data("", "", "", [], "", [], [], [])
         return parsed
     }
     
@@ -103,9 +114,10 @@ class Data {
       obj.packages,
       obj.hostname,
       obj.users,
-      obj.disks
+      obj.disks,
+      obj.parentDisks
     )
   }
 }
 
-export { Data, Disk, User, Filesystem, DiskType }
+export { Data, Disk, User, Filesystem, DiskType, ParentDisk }
