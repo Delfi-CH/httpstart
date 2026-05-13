@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Data } from "$lib/data";
+    import { Data, User } from "$lib/data";
     import langs from "$lib/data/langs.json";
     import { resolve } from "$app/paths";
     import {
@@ -18,6 +18,8 @@
     let serverURL = $state("/");
     let data = $state(Data.load());
     let allIsOk = $state(false)
+
+    let userValidationErrorMsg = $state("")
 
     let check1 = $state(false)
     let check2 = $state(false)
@@ -40,7 +42,7 @@
         check2 = !(data.timezone === undefined || data.timezone === null || data.timezone === "")
         check3 = true
         check4 = true
-        check5a = (data.users.length < 1)
+        check5a = validateUsers($state.snapshot(data.users))
         check5b = !(data.hostname === undefined || data.hostname === null || data.hostname === "")
         if (check1 && check2 && check3 && check4 && check5a && check5b) {
             allIsOk = true
@@ -48,6 +50,35 @@
             allIsOk = false
         }
     })
+
+    function validateUsers(users: Array<User>): boolean {
+        if (users.length < 1) {
+            userValidationErrorMsg = "No users created!"
+            return false
+        }
+        const e = users.map(validateSingleUser)
+        if (e.includes(false)) {
+            userValidationErrorMsg = "Username or passwords missing!"
+            return false
+        }
+
+        if (users.length === 1 && users[0].username === "root") {
+            userValidationErrorMsg = "The root account cannot be the only account!"
+            return false
+        }
+        userValidationErrorMsg = ""
+        return true
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function validateSingleUser(obj: any) {
+        if (
+            obj.username !== "" &&
+            obj.password !== ""
+        ) {return true} else {
+            return false
+        }
+    }
 </script>
 
 <Container>
@@ -143,6 +174,9 @@
                             {/each}
                         {/if}
                     </p>
+                    {#if !check5a}
+                        <p class="text-warning">{userValidationErrorMsg}</p>
+                    {/if}
                     <p>
                         Hostname:
                         {#if data.hostname === undefined || data.hostname === null || data.hostname === ""}

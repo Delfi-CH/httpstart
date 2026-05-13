@@ -1,64 +1,76 @@
 <script lang="ts">
     import { Data, User } from "$lib/data";
     import { onMount } from "svelte";
-    import { Input, Table, Button } from "@sveltestrap/sveltestrap"
+    import { Input, Table, Button } from "@sveltestrap/sveltestrap";
     import UserEditModal from "$lib/components/UserEditModal.svelte";
 
-    let users: Array<User> = $state([])
-    let currentUser = $state({})
-    let showEditing = $state(false)
-    let hostname = $state("")
-    let hostnameIsValid: boolean = $state(true)
-    onMount(()=>{
-        const data = Data.load()
-        users = data.users
-        hostname = data.hostname
+    let users: Array<User> = $state([]);
+    let currentUser = $state({});
+    let showEditing = $state(false);
+    let editingIndex: number | null = $state(null);
+    let hostname = $state("");
+    let hostnameIsValid: boolean = $state(true);
+    onMount(() => {
+        const data = Data.load();
+        users = data.users;
+        hostname = data.hostname;
         if (users.length < 1) {
-            users = [...users, new User("root", "", true, false)]
+            users = [...users, new User("root", "", true, false)];
         }
-        data.users = users
-        data.save()
-        console.log(users)
-    })
+        data.users = users;
+        data.save();
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    function handleHostnameChange(e:any) {
-        const regex = /^([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*)(\.([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*))*$/
-        hostnameIsValid = regex.test(e.target.value)
+    function handleHostnameChange(e: any) {
+        const regex =
+            /^([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*)(\.([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*))*$/;
+        hostnameIsValid = regex.test(e.target.value);
         if (hostnameIsValid) {
-            hostname = String(e.target.value)
-            const data = Data.load()
-            data.hostname = hostname
-            data.save()
+            hostname = String(e.target.value);
+            const data = Data.load();
+            data.hostname = hostname;
+            data.save();
         }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function validateUser(obj: any) {
-        if (
-            obj.username !== "" &&
-            obj.password !== ""
-        ) {return true} else {
-            return false
+        const regex =
+            /^([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*)(\.([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*))*$/;
+        if (obj.username !== "" && obj.password !== "" && regex.test(obj.username)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    $effect(()=>{
-        const data = Data.load()
-        data.users = users
-        data.hostname = hostname
-        data.save()
-    })
+    $effect(() => {
+        const data = Data.load();
+        data.users = users;
+        data.hostname = hostname;
+        data.save();
+    });
 </script>
+
 <main>
     <h1>Users & Hostname</h1>
     <h2>Users</h2>
-    <Button color="success" onclick={()=>{
-        currentUser = new User("", "", false, false)
-        showEditing = true
-    }}>New User</Button>
-    {#if !users.some((x)=> x.username === "root")}
-        <Button color="warning" onclick={()=> {users = [...users, new User("root", "", true, false)]}}>Add root user</Button>
+    <Button
+        color="success"
+        onclick={() => {
+            currentUser = new User("", "", false, false);
+            showEditing = true;
+            editingIndex = null;
+        }}>New User</Button
+    >
+    {#if !users.some((x) => x.username === "root")}
+        <Button
+            color="warning"
+            onclick={() => {
+                users = [...users, new User("root", "", true, false)];
+            }}>Add root user</Button
+        >
     {/if}
     <Table size="lg" bordered striped>
         <thead>
@@ -72,29 +84,44 @@
             </tr>
         </thead>
         <tbody>
-            {#each users as user, index (index) }
+            {#each users as user, index (index)}
                 <tr>
                     <th scope="row">{index}</th>
                     <td>{user.username}</td>
-                    <td>{user.password === "" ? "No" :  "Yes"}</td>
+                    <td>{user.password === "" ? "No" : "Yes"}</td>
                     <td>{user.sudo ? "Yes" : "No"}</td>
                     <td>{user.ssh ? "Yes" : "No"}</td>
                     <td>
-                        <Button color="dark" onclick={()=>{
-                            currentUser = user
-                            showEditing = true
-                        }}>Edit</Button>
-                        <Button color="danger" disabled={user.username === "root"} onclick={()=>{
-                            users = users.filter((x)=> x.username !== user.username)
-                        }}>Delete</Button>
+                        <Button
+                            color="dark"
+                            onclick={() => {
+                                currentUser = user;
+                                editingIndex = index;
+                                showEditing = true;
+                            }}>Edit</Button
+                        >
+                        <Button
+                            color="danger"
+                            disabled={user.username === "root"}
+                            onclick={() => {
+                                users = users.filter(
+                                    (x) => x.username !== user.username,
+                                );
+                            }}>Delete</Button
+                        >
                         {#if user.username === "root"}
-                            <Button color="warning" onclick={()=>{
-                                if (users.length <= 1) {
-                                    console.log("nuhuh")
-                                } else {
-                                    users = users.filter((x)=> x.username !== "root")
-                                }
-                            }}>Disable root</Button>
+                            <Button
+                                color="warning"
+                                onclick={() => {
+                                    if (users.length <= 1) {
+                                        console.log("nuhuh");
+                                    } else {
+                                        users = users.filter(
+                                            (x) => x.username !== "root",
+                                        );
+                                    }
+                                }}>Disable root</Button
+                            >
                         {/if}
                     </td>
                 </tr>
@@ -102,16 +129,35 @@
         </tbody>
     </Table>
     {#if showEditing}
-        <UserEditModal open={showEditing} data={currentUser} onSubmit={(data2: User)=>{
-            showEditing=false
-            console.log(data2)
-            if (validateUser(data2)) {
-                users = [...users, data2]
-            }
-        }} onClose={()=> showEditing=false}>
+        <UserEditModal
+            open={showEditing}
+            data={currentUser}
+            onSubmit={(data2: User) => {
+                showEditing = false;
 
-        </UserEditModal>
+                if (validateUser(data2)) {
+                    if (editingIndex !== null) {
+                        users[editingIndex] = data2;
+                        users = [...users]; // trigger reactivity
+                    } else {
+                        users = [...users, data2];
+                    }
+                }
+
+                editingIndex = null;
+            }}
+            onClose={() => {
+                showEditing = false;
+                editingIndex = null;
+            }}
+        ></UserEditModal>
     {/if}
     <h3>Hostname</h3>
-    <Input type="text" oninput={handleHostnameChange} bind:value={hostname} placeholder="e.g. ubuntu-server" valid={hostnameIsValid}></Input>
+    <Input
+        type="text"
+        oninput={handleHostnameChange}
+        bind:value={hostname}
+        placeholder="e.g. ubuntu-server"
+        valid={hostnameIsValid}
+    ></Input>
 </main>
