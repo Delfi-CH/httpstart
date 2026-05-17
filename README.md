@@ -1,6 +1,6 @@
 # httpstart
 
-Web-based installer for Linux Distributions 
+Web-based installer for Linux Distributions
 
 ## Supported Distributions
 

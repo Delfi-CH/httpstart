@@ -5,7 +5,7 @@
 # Script for bundeling the linux-web-installer
 
 # Params:
-# type (options: deb, rpm, pacman, tgz)
+# type (options: deb, rpm, pacman, tgz, all)
 
 # Usage:
 # Best invoked via package.json
@@ -18,6 +18,7 @@
 type=$1
 if [ -z "$type" ]; then
     echo "No type set, defaulting to tar.gz..."
+    type="tgz"
 fi
 
 echo "Bundeling backend..."
@@ -60,6 +61,26 @@ bundle_debian () {
         exit 1
     fi
     echo "dpkg-deb was found!"
+
+    echo "Creating directories..."
+    mkdir -p dist/httpstart-debian/usr/bin/
+    if [ "$status" != 0 ]; then
+        echo "Creating directories failed!"
+        exit 1
+    fi
+
+    mkdir -p dist/httpstart-debian/usr/share/httpstart
+    if [ "$status" != 0 ]; then
+        echo "Creating directories failed!"
+        exit 1
+    fi
+    mkdir -p dist/httpstart-debian/usr/share/doc/node-httpstart/
+    if [ "$status" != 0 ]; then
+        echo "Creating directories failed!"
+        exit 1
+    fi
+
+    echo "Creating directories was sucessfull!"
 
     echo "Copying files..."
 
@@ -126,7 +147,43 @@ bundle_debian () {
     echo "Building .deb file was sucessfull!"
 }
 
-if [ "$type" == "deb" ]; then
+bundle_tgz () {
+    echo "Testing for tar..."
+    type tar &> /dev/null
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "tar wasnt found in \$PATH!"
+        echo "Aborting..."
+        exit 1
+    fi
+    echo "tar was found!"
+
+    echo "Testing for gzip..."
+    type gzip &> /dev/null
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "gzip wasnt found in \$PATH!"
+        echo "Aborting..."
+        exit 1
+    fi
+    echo "gzip was found!"
+
+    echo "Creating tar.gz..."
+    tar -czf dist/httpstart.tar.gz dist/ui dist/httpstart README.md LICENSE
+    if [ "$status" != 0 ]; then
+        echo "Creating tar.gz failed!"
+        echo "Aborting..."
+        exit 1
+    fi
+    echo "Creating tar.gz was sucessfull"
+}
+
+if [ "$type" == "deb" ] || [ "$type" == "all" ]; then
     echo "Bundeling for Debian (dpkg)..."
     bundle_debian
+fi
+
+if [ "$type" == "tgz" ] || [ "$type" == "all" ]; then
+    echo "Bundeling for tar.gz (tgz)..."
+    bundle_tgz
 fi

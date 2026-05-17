@@ -5,7 +5,7 @@
 # Script for cleaning up the bundeling of the linux-web-installer
 
 # Params:
-# type (options: deb, rpm, pacman, tgz)
+# type (options: deb, rpm, pacman, tgz, all)
 
 # Usage:
 # Best invoked via package.json
@@ -38,7 +38,7 @@ fi
 
 echo "Deleting shared files was sucessfull!"
 
-if [ "$type" == "deb" ]; then
+if [ "$type" == "deb" ] || [ "$type" == "all" ]; then
     echo "Deleting debian specific files..."
 
     rm -f dist/httpstart-debian/usr/bin/httpstart
@@ -71,5 +71,17 @@ if [ "$type" == "deb" ]; then
 
     echo "Deleting debian specific files was sucessfull!"
 
-    exit 0
 fi
+
+if [ "$type" == "tgz" ] || [ "$type" == "all" ]; then
+    echo "Deleting tar.gz specific files..."
+    rm -f dist/httpstart.tar.gz
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "Deleting tar.gz specific files failed!"
+        exit 1
+    fi
+
+    echo "Deleting tar.gz specific files was sucessfull!"
+fi
+exit 0
