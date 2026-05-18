@@ -2,14 +2,14 @@
 # 13.05.2026 Delfi-CH
 
 # Description
-# Launcher script for the linux-web-installer
+# Launcher script for the httpstart
 
 # Params:
 # index: Path to index.cjs file
 # uipath: Path to the ui folder
 
 # Usage:
-# ./linux-web-installer <path/to/index.cjs> <path/to/ui>
+# ./httpstart <path/to/index.cjs> <path/to/ui>
  
 # Returns:
 # 0: All good
@@ -55,15 +55,6 @@ if [ "$status" != 0 ]; then
 fi
 
 echo "NodeJS found in path..."
-
-version=$(node --version)
-regex=^v[2-9][2-9].[0-9].[0-9]$
-if [[ "$version" =~ $regex ]]; then
-    echo "NodeJS version is ok"
-else
-    echo "Bad NodeJS version $version! Please use NodeJS 22 or later."
-    exit 1
-fi
 
 echo "Checking if port 29222 is open..."
 lsof -Pi :29222 -sTCP:LISTEN -t

@@ -5,7 +5,7 @@
 # Script for bundeling the linux-web-installer
 
 # Params:
-# type (options: deb, rpm, pacman, tgz, all)
+# type (options: deb, rpm, tgz, all, none)
 
 # Usage:
 # Best invoked via package.json

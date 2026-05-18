@@ -3,19 +3,32 @@
 pkgname=httpstart
 pkgver=1
 pkgrel=1
-pkgdesc="Network installer"
+pkgdesc="Linux Network installer"
 arch=('x86_64')
 url="https://github.com/Delfi-CH/"
 license=('GPL-3.0-or-later')
 
 depends=('nodejs')
 
+makedepends=('pnpm')
+
 provides=('httpstart')
 conflicts=('httpstart')
 
-source=("")
+source=("git+https://github.com/Delfi-CH/httpstart.git")
 sha256sums=('SKIP')
 
+prepare() {
+    cd $srcdir/httpstart
+    pnpm install
+    ./bundle.sh none
+}
+
 package() {
-  
+    cd $srcdir/httpstart
+    install -Dm755 dist/httpstart  -t "$pkgdir/usr/bin/"
+    install -Dm755 dist/index.cjs -t "$pkgdir/usr/share/httpstart/"
+    cp -r dist/ui "$pkgdir/usr/share/httpstart/"
+
+    install -Dm755 dist/httpstart.service -t "$pkgdir/usr/lib/systemd/system/"
 }

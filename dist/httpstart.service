@@ -1,0 +1,12 @@
+[Unit]
+Description=Linux Network installer
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/httpstart
+Type=simple
+Restart=always
+
+[Install]
+WantedBy=default.target
+RequiredBy=network.target
