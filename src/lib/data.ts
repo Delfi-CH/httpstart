@@ -86,7 +86,8 @@ class Data {
     users: Array<User>
     disks: Array<Disk>
     parentDisks: Array<ParentDisk>
-    constructor(language: string, timezone: string, keymap:string, packages: Array<string>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>) {
+    distro: Distribution
+    constructor(language: string, timezone: string, keymap:string, packages: Array<string>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>, distro: Distribution) {
         this.language = language
         this.timezone = timezone
         this.keymap = keymap
@@ -95,13 +96,14 @@ class Data {
         this.users = users
         this.disks = disks
         this.parentDisks = parentDisks
+        this.distro = distro
     }
     save() {
         localStorage.setItem("data", JSON.stringify(this))
     }
     static load() {
         const raw = localStorage.getItem("data")
-        const parsed = raw ? Data.fromJSON(JSON.parse(raw)) : new Data("", "", "", [], "", [], [], [])
+        const parsed = raw ? Data.fromJSON(JSON.parse(raw)) : new Data("", "", "", [], "", [], [], [], Distribution.Other)
         return parsed
     }
     
@@ -115,9 +117,23 @@ class Data {
       obj.hostname,
       obj.users,
       obj.disks,
-      obj.parentDisks
+      obj.parentDisks,
+      obj.distro
     )
   }
 }
 
-export { Data, Disk, User, Filesystem, DiskType, ParentDisk }
+enum Distribution {
+    Ubuntu = "Ubuntu",
+    Debian = "Debian GNU/Linux",
+    Fedora = "Fedora Linux",
+    Alma = "AlmaLinux",
+    RHEL = "Red Hat Enterprise Linux",
+    OpenSUSE_Tumbleweed = "openSUSE Tumbleweed",
+    OpenSUSE_LEAP = "openSUSE Leap",
+    Alpine = "Alpine Linux",
+    ArchLinux = "Arch Linux",
+    Other = "Linux"
+}
+
+export { Data, Disk, User, Filesystem, DiskType, ParentDisk, Distribution }

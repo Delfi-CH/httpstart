@@ -13,6 +13,7 @@
         Button,
         CardTitle,
     } from "@sveltestrap/sveltestrap";
+    import axios from "axios";
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let serverURL = $state("/");
@@ -28,12 +29,16 @@
     let check5a = $state(false)
     let check5b = $state(false)
 
-    onMount(() => {
+    onMount(async () => {
         const mode = import.meta.env.MODE;
         if (mode === "development") {
             serverURL = "http://localhost:29222";
         }
         data = Data.load();
+        const tmpDistro = await axios.get(serverURL +"/api/distro")
+        data.distro = tmpDistro.data.distro
+
+        data.save()
     });
 
     onMount(() => {
@@ -83,7 +88,7 @@
 
 <Container>
     <Row>
-        <h1>linux-web-install</h1>
+        <h1>{data.distro} Network Installer</h1>
         <Col class="d-flex mt-3 mb-3">
             <Card color="dark" theme="dark" class="m-1 h-100 w-100">
                 <CardHeader>
