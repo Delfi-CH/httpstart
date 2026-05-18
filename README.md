@@ -6,6 +6,10 @@ Web-based installer for Linux Distributions
 
 ### Current
 
+- none
+
+### Work in Progress
+
 - Debian 13
 
 ### Planned
@@ -15,13 +19,12 @@ Web-based installer for Linux Distributions
 - Fedora 44
 - Alpine
 - ArchLinux
+- OpenSUSE Leap
+- OpenSUSE Tumbleweed
 
 ## TODO
 
 Steps:
 
-- Language
-- Location
 - Disks
 - Packages
-- Users
