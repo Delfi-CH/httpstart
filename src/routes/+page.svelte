@@ -91,8 +91,8 @@
         <h1>{data.distro} Network Installer</h1>
         <Col class="d-flex mt-3 mb-3">
             <Card color="dark" theme="dark" class="m-1 h-100 w-100">
-                <CardHeader>
-                    <CardTitle>Language {#if check1}✔️{:else}❌{/if}</CardTitle>
+                <CardHeader class={check1 ? "bg-success":"bg-danger"}>
+                    <CardTitle>Language</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
                     <p>
@@ -115,8 +115,8 @@
         </Col>
         <Col class="d-flex mt-3 mb-3">
             <Card color="dark" theme="dark" class="m-1 h-100 w-100">
-                <CardHeader>
-                    <CardTitle>Location & Timezone {#if check2}✔️{:else}❌{/if}</CardTitle>
+                <CardHeader class={check2 ? "bg-success":"bg-danger"}>
+                    <CardTitle>Location & Timezone</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
                     <p>Timezone: 
@@ -137,8 +137,8 @@
         </Col>
         <Col class="d-flex mt-3 mb-3">
             <Card color="dark" theme="dark" class="m-1 h-100 w-100">
-                <CardHeader>
-                    <CardTitle>Additional Software {#if check3}✔️{:else}❌{/if}</CardTitle>
+                <CardHeader class={check3 ? "bg-success":"bg-danger"}>
+                    <CardTitle>Additional Software</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
                     <p>text</p>
@@ -150,8 +150,8 @@
     <Row>
         <Col class="d-flex mt-3 mb-3">
             <Card color="dark" theme="dark" class="m-1 h-100 w-100">
-                <CardHeader>
-                    <CardTitle>Disks {#if check4}✔️{:else}❌{/if}</CardTitle>
+                <CardHeader class={check4 ? "bg-success":"bg-danger"}>
+                    <CardTitle>Disks</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
                     <p>text</p>
@@ -161,8 +161,8 @@
         </Col>
         <Col class="d-flex mt-3 mb-3">
             <Card color="dark" theme="dark" class="m-1 h-100 w-100">
-                <CardHeader>
-                    <CardTitle>Users & Hostname {#if check5a && check5b}✔️{:else}❌{/if}</CardTitle>
+                <CardHeader class={check5a && check5b ? "bg-success":"bg-danger"}>
+                    <CardTitle>Users & Hostname</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
                     <p>Users: 
@@ -200,7 +200,7 @@
         </Col>
         <Col class="d-flex mt-3 mb-3">
             <Card color="dark" theme="dark" class="m-1 h-100 w-100">
-                <CardHeader>
+                <CardHeader  class={check1 && check2 && check3 && check4 && check5a && check5b ? "bg-success":"bg-danger"}>
                     <CardTitle>Finish</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
