@@ -10,7 +10,7 @@
     onMount(async () => {
         const mode = import.meta.env.MODE;
 
-        let serverURL = "/";
+        let serverURL = "";
         if (mode === "development") {
             serverURL = "http://localhost:29222";
         }

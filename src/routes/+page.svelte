@@ -16,7 +16,7 @@
     import axios from "axios";
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let serverURL = $state("/");
+    let serverURL = $state("");
     let data = $state(Data.load());
     let allIsOk = $state(false)
 

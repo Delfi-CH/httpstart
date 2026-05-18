@@ -10,7 +10,7 @@
         Col,
     } from "@sveltestrap/sveltestrap";
 
-    let serverURL = $state("/");
+    let serverURL = $state("");
     let data = $state(Data.load());
 
     let groupedDisks: Array<{
