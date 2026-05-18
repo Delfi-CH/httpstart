@@ -8,6 +8,11 @@ app.use(cors())
 app.use("/ui", express.static(argv[3]))
 
 const port = Number(argv[2]);
+
+app.get("/", (req,res)=>{
+    res.redirect("/ui")
+})
+
 app.get("/api", (req, res)=> {
     res.send("hello, world")
 })
