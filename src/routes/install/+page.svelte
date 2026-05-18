@@ -1,6 +1,12 @@
 <script lang="ts">
-
+    import { Container, Row, Col } from "@sveltestrap/sveltestrap";
 </script>
 <main>
-    <h1>install</h1>
+    <Container>
+        <h1>install</h1>
+        <Row>
+            <Col>
+            </Col>
+        </Row>
+    </Container>
 </main>

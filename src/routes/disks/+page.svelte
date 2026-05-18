@@ -1,14 +1,14 @@
 <script lang="ts">
     import axios from "axios";
-    import {
-        Data,
-        Disk,
-        DiskType,
-        ParentDisk,
-        Filesystem,
-    } from "$lib/data";
+    import { Data, Disk, DiskType, ParentDisk, Filesystem } from "$lib/data";
     import { onMount } from "svelte";
-    import { Table, Button } from "@sveltestrap/sveltestrap";
+    import {
+        Table,
+        Button,
+        Container,
+        Row,
+        Col,
+    } from "@sveltestrap/sveltestrap";
 
     let serverURL = $state("/");
     let data = $state(Data.load());
@@ -62,9 +62,7 @@
         return devices.flatMap((d) => [d, ...flatten(d.children ?? [])]);
     }
 
-    function determineDiskType(
-        mountpoints: Array<string>,
-    ): DiskType {
+    function determineDiskType(mountpoints: Array<string>): DiskType {
         if (mountpoints.includes("/")) {
             return DiskType.root;
         } else if (mountpoints.includes("/home")) {
@@ -88,60 +86,67 @@
 </script>
 
 <main>
-    <h1>Disks</h1>
+    <Container>
+        <h1>Disks</h1>
+        <Row>
+            <Col>
+                <h2>Used Disks</h2>
+            </Col>
+            <Col>
+                <h2>Available Disks</h2>
+                {#each groupedDisks as group (group.parent.name)}
+                    <div class="mb-4">
+                        <h3>
+                            Parent Disk: {group.parent.name} ({group.parent
+                                .size})
+                        </h3>
 
-    <h2>Used Disks</h2>
+                        <Table size="lg" bordered striped>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Size</th>
+                                    <th>Filesystem</th>
+                                    <th>Type</th>
+                                    <th>Mountpoints</th>
+                                    <th>Operations</th>
+                                </tr>
+                            </thead>
 
-    <h2>Available Disks</h2>
-    {#each groupedDisks as group (group.parent.name)}
-        <div class="mb-4">
-            <h3>
-                Parent Disk: {group.parent.name} ({group.parent.size})
-            </h3>
+                            <tbody>
+                                {#each group.disks as disk (disk.name)}
+                                    <tr>
+                                        <td>{disk.name}</td>
+                                        <td>{disk.size}</td>
 
-            <Table size="lg" bordered striped>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Size</th>
-                        <th>Filesystem</th>
-                        <th>Type</th>
-                        <th>Mountpoints</th>
-                        <th>Operations</th>
-                    </tr>
-                </thead>
+                                        <td>
+                                            {disk.filesystem
+                                                ? disk.filesystem
+                                                : "None"}
+                                        </td>
 
-                <tbody>
-                    {#each group.disks as disk (disk.name)}
-                        <tr>
-                            <td>{disk.name}</td>
-                            <td>{disk.size}</td>
+                                        <td>
+                                            {DiskType[
+                                                determineDiskType(
+                                                    disk.mountpoints,
+                                                )
+                                            ]}
+                                        </td>
 
-                            <td>
-                                {disk.filesystem
-                                    ? disk.filesystem
-                                    : "None"}
-                            </td>
+                                        <td>
+                                            {disk.mountpoints.join(", ")}
+                                        </td>
 
-                            <td>
-                                {DiskType[
-                                    determineDiskType(
-                                        disk.mountpoints,
-                                    )
-                                ]}
-                            </td>
-
-                            <td>
-                                {disk.mountpoints.join(", ")}
-                            </td>
-
-                            <td>
-                                <Button>Edit</Button>
-                            </td>
-                        </tr>
-                    {/each}
-                </tbody>
-            </Table>
-        </div>
-    {/each}
+                                        <td>
+                                            <Button>Edit</Button>
+                                        </td>
+                                    </tr>
+                                {/each}
+                            </tbody>
+                        </Table>
+                    </div>
+                {/each}
+            </Col>
+        </Row>
+    </Container>
 </main>

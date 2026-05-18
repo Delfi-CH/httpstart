@@ -1,7 +1,14 @@
 <script lang="ts">
     import { Data, User } from "$lib/data";
     import { onMount } from "svelte";
-    import { Input, Table, Button } from "@sveltestrap/sveltestrap";
+    import {
+        Input,
+        Table,
+        Button,
+        Container,
+        Row,
+        Col,
+    } from "@sveltestrap/sveltestrap";
     import UserEditModal from "$lib/components/UserEditModal.svelte";
 
     let users: Array<User> = $state([]);
@@ -38,7 +45,11 @@
     function validateUser(obj: any) {
         const regex =
             /^([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*)(\.([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*))*$/;
-        if (obj.username !== "" && obj.password !== "" && regex.test(obj.username)) {
+        if (
+            obj.username !== "" &&
+            obj.password !== "" &&
+            regex.test(obj.username)
+        ) {
             return true;
         } else {
             return false;
@@ -54,110 +65,127 @@
 </script>
 
 <main>
-    <h1>Users & Hostname</h1>
-    <h2>Users</h2>
-    <Button
-        color="success"
-        onclick={() => {
-            currentUser = new User("", "", false, false);
-            showEditing = true;
-            editingIndex = null;
-        }}>New User</Button
-    >
-    {#if !users.some((x) => x.username === "root")}
-        <Button
-            color="warning"
-            onclick={() => {
-                users = [...users, new User("root", "", true, false)];
-            }}>Add root user</Button
+    <Container>
+        <h1>Users & Hostname</h1>
+        <Row
+            ><Col>
+                <h2>Users</h2>
+                <Button
+                    color="success"
+                    onclick={() => {
+                        currentUser = new User("", "", false, false);
+                        showEditing = true;
+                        editingIndex = null;
+                    }}>New User</Button
+                >
+                {#if !users.some((x) => x.username === "root")}
+                    <Button
+                        color="warning"
+                        onclick={() => {
+                            users = [
+                                ...users,
+                                new User("root", "", true, false),
+                            ];
+                        }}>Add root user</Button
+                    >
+                {/if}
+                <Table size="lg" bordered striped>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Username</th>
+                            <th>Password set?</th>
+                            <th>Superuser?</th>
+                            <th>SSH login?</th>
+                            <th>Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#each users as user, index (index)}
+                            <tr>
+                                <th scope="row">{index}</th>
+                                <td>{user.username}</td>
+                                <td>{user.password === "" ? "No" : "Yes"}</td>
+                                <td>{user.sudo ? "Yes" : "No"}</td>
+                                <td>{user.ssh ? "Yes" : "No"}</td>
+                                <td>
+                                    <Button
+                                        color="dark"
+                                        onclick={() => {
+                                            currentUser = user;
+                                            editingIndex = index;
+                                            showEditing = true;
+                                        }}>Edit</Button
+                                    >
+                                    <Button
+                                        color="danger"
+                                        disabled={user.username === "root"}
+                                        onclick={() => {
+                                            users = users.filter(
+                                                (x) =>
+                                                    x.username !==
+                                                    user.username,
+                                            );
+                                        }}>Delete</Button
+                                    >
+                                    {#if user.username === "root"}
+                                        <Button
+                                            color="warning"
+                                            onclick={() => {
+                                                if (users.length <= 1) {
+                                                    console.log("nuhuh");
+                                                } else {
+                                                    users = users.filter(
+                                                        (x) =>
+                                                            x.username !==
+                                                            "root",
+                                                    );
+                                                }
+                                            }}>Disable root</Button
+                                        >
+                                    {/if}
+                                </td>
+                            </tr>
+                        {/each}
+                    </tbody>
+                </Table>
+                {#if showEditing}
+                    <UserEditModal
+                        open={showEditing}
+                        data={currentUser}
+                        onSubmit={(data2: User) => {
+                            showEditing = false;
+
+                            if (validateUser(data2)) {
+                                if (editingIndex !== null) {
+                                    users[editingIndex] = data2;
+                                    users = [...users]; // trigger reactivity
+                                } else {
+                                    users = [...users, data2];
+                                }
+                            }
+
+                            editingIndex = null;
+                        }}
+                        onClose={() => {
+                            showEditing = false;
+                            editingIndex = null;
+                        }}
+                    ></UserEditModal>
+                {/if}
+            </Col></Row
         >
-    {/if}
-    <Table size="lg" bordered striped>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Username</th>
-                <th>Password set?</th>
-                <th>Superuser?</th>
-                <th>SSH login?</th>
-                <th>Operations</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each users as user, index (index)}
-                <tr>
-                    <th scope="row">{index}</th>
-                    <td>{user.username}</td>
-                    <td>{user.password === "" ? "No" : "Yes"}</td>
-                    <td>{user.sudo ? "Yes" : "No"}</td>
-                    <td>{user.ssh ? "Yes" : "No"}</td>
-                    <td>
-                        <Button
-                            color="dark"
-                            onclick={() => {
-                                currentUser = user;
-                                editingIndex = index;
-                                showEditing = true;
-                            }}>Edit</Button
-                        >
-                        <Button
-                            color="danger"
-                            disabled={user.username === "root"}
-                            onclick={() => {
-                                users = users.filter(
-                                    (x) => x.username !== user.username,
-                                );
-                            }}>Delete</Button
-                        >
-                        {#if user.username === "root"}
-                            <Button
-                                color="warning"
-                                onclick={() => {
-                                    if (users.length <= 1) {
-                                        console.log("nuhuh");
-                                    } else {
-                                        users = users.filter(
-                                            (x) => x.username !== "root",
-                                        );
-                                    }
-                                }}>Disable root</Button
-                            >
-                        {/if}
-                    </td>
-                </tr>
-            {/each}
-        </tbody>
-    </Table>
-    {#if showEditing}
-        <UserEditModal
-            open={showEditing}
-            data={currentUser}
-            onSubmit={(data2: User) => {
-                showEditing = false;
-
-                if (validateUser(data2)) {
-                    if (editingIndex !== null) {
-                        users[editingIndex] = data2;
-                        users = [...users]; // trigger reactivity
-                    } else {
-                        users = [...users, data2];
-                    }
-                }
-
-                editingIndex = null;
-            }}
-            onClose={() => {
-                showEditing = false;
-                editingIndex = null;
-            }}
-        ></UserEditModal>
-    {/if}
-    <h3>Hostname</h3>
-    <Input
-        type="text"
-        oninput={handleHostnameChange}
-        bind:value={hostname}
-        placeholder="e.g. ubuntu-server"
-        valid={hostnameIsValid}
-    ></Input>
+        <Row
+            ><Col>
+                <h3>Hostname</h3>
+                <Input
+                    type="text"
+                    oninput={handleHostnameChange}
+                    bind:value={hostname}
+                    placeholder="e.g. ubuntu-server"
+                    valid={hostnameIsValid}
+                ></Input>
+            </Col></Row
+        >
+    </Container>
 </main>
