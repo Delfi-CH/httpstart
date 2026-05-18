@@ -24,7 +24,7 @@
 <main>
     <h1>Language</h1>
     <Input type="select" onchange={onLanguageChange} bind:value={selectedLang}>
-        <option selected={selectedLang === ""}>-- Select a Language --</option>
+        <option value="">-- Select a Language --</option>
         {#each langValues as lang (lang) }
             <option value={lang[0]} selected={selectedLang === lang[0]}>{lang[1]}</option>
         {/each}
