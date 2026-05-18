@@ -8,8 +8,10 @@
         Container,
         Row,
         Col,
+        Label,
     } from "@sveltestrap/sveltestrap";
     import UserEditModal from "$lib/components/UserEditModal.svelte";
+    import AlertModal from "$lib/components/AlertModal.svelte";
 
     let users: Array<User> = $state([]);
     let currentUser = $state({});
@@ -17,6 +19,9 @@
     let editingIndex: number | null = $state(null);
     let hostname = $state("");
     let hostnameIsValid: boolean = $state(true);
+    let showAlertModal = $state(false);
+    let messageAlertModal = $state("");
+
     onMount(() => {
         const data = Data.load();
         users = data.users;
@@ -133,7 +138,9 @@
                                             color="warning"
                                             onclick={() => {
                                                 if (users.length <= 1) {
-                                                    console.log("nuhuh");
+                                                    showAlertModal = true;
+                                                    messageAlertModal =
+                                                        "Cannot disable the root user if there are no other users!";
                                                 } else {
                                                     users = users.filter(
                                                         (x) =>
@@ -173,18 +180,29 @@
                         }}
                     ></UserEditModal>
                 {/if}
+                {#if showAlertModal}
+                    <AlertModal
+                        open={showAlertModal}
+                        message={messageAlertModal}
+                        onClose={() => (showAlertModal = false)}
+                    ></AlertModal>
+                {/if}
             </Col></Row
         >
         <Row
             ><Col>
                 <h3>Hostname</h3>
-                <Input
-                    type="text"
-                    oninput={handleHostnameChange}
-                    bind:value={hostname}
-                    placeholder="e.g. ubuntu-server"
-                    valid={hostnameIsValid}
-                ></Input>
+                <Label for="hostselect"
+                    >Enter your hostname
+                    <Input
+                        type="text"
+                        oninput={handleHostnameChange}
+                        bind:value={hostname}
+                        placeholder="e.g. ubuntu-server"
+                        valid={hostnameIsValid}
+                        id="hostselect"
+                    ></Input>
+                </Label>
             </Col></Row
         >
     </Container>
