@@ -30,7 +30,7 @@
                     <a
                         href="https://github.com/Delfi-CH/httpstart"
                         target="_blank"
-                        class="text-white">httpstart</a
+                        >httpstart</a
                     >
                     v{httpstartVersion}
                 </p>
@@ -39,7 +39,7 @@
                     <a
                         href="https://github.com/Delfi-CH/httpstart"
                         target="_blank"
-                        class="text-white">httpstart</a
+                        >httpstart</a
                     >
                     is a project of Delfi-CH
                     <a href="https://delfi.dev" target="_blank"

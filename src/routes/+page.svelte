@@ -165,7 +165,7 @@
                     <CardTitle>Users & Hostname {#if check5a && check5b}✔️{:else}❌{/if}</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
-                    <p>Users : 
+                    <p>Users: 
                         {#if data.users.length < 1}
                             <span
                                 class="text-danger text-underline"
