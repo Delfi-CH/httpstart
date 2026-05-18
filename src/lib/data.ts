@@ -136,4 +136,6 @@ enum Distribution {
     Other = "Linux"
 }
 
-export { Data, Disk, User, Filesystem, DiskType, ParentDisk, Distribution }
+const httpstartVersion = "0.1.0"
+
+export { Data, Disk, User, Filesystem, DiskType, ParentDisk, Distribution, httpstartVersion }

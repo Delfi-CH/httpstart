@@ -11,5 +11,6 @@
         <NavbarItem href="/disks" content="Disks"></NavbarItem>
         <NavbarItem href="/packages" content="Additional Software"></NavbarItem>
         <NavbarItem href="/users" content="Users"></NavbarItem>
+        <NavbarItem href="/about" content="About"></NavbarItem>
     </Nav>
 </main>
