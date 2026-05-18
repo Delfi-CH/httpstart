@@ -58,8 +58,8 @@ echo "NodeJS found in path..."
 
 echo "Checking if port 29222 is open..."
 lsof -Pi :29222 -sTCP:LISTEN -t
-status=$?
-if [ "$status" != 1 ]; then
+status=$? &> /dev/null
+if [ "$status" == 0 ]; then
     echo "Port 29222 is already in use!"
     echo "Aborting..."
     exit 2
