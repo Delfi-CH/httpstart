@@ -9,6 +9,6 @@
 </script>
 <main>
     <NavItem active={isActive}>
-        <NavLink href={resolve(href)} active={isActive} class={isActive ? 'bg-dark text-white' : 'text-light'}>{content}</NavLink>
+        <NavLink href={resolve(href)} active={isActive} class={isActive ? 'bg-dark text-white' : 'text-white'}>{content}</NavLink>
     </NavItem>
 </main>
