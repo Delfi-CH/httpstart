@@ -11,8 +11,10 @@
 
 	const getDistro = () => data.distro.distro;
 	const distro = getDistro();
-	const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-	let cssUrl = "/ui/css/light/bootstrap.min.css";
+	let darkMode = $state(
+		window.matchMedia("(prefers-color-scheme: dark)").matches,
+	);
+	let cssUrl = $state("/ui/css/light/bootstrap.min.css");
 
 	if (mode === "development" && distro === Distribution.Ubuntu) {
 		cssUrl = "/css/ubuntu/bootstrap.min.css";
@@ -33,15 +35,11 @@
 </svelte:head>
 
 <Container class="d-flex flex-column min-vh-100 p-0" fluid>
-	<Navbar />
+	<Navbar></Navbar>
 
 	<div class="flex-grow-1">
 		{@render children()}
 	</div>
 
-	<Footer />
+	<Footer></Footer>
 </Container>
-	
-	
-
-
