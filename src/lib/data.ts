@@ -34,12 +34,12 @@ enum DiskType {
 }
 
 enum Filesystem {
-    ext4,
-    btrfs,
-    xfs,
-    fat32,
-    swap,
-    none
+    ext4 = "ext4",
+    btrfs = "btrfs",
+    xfs = "xfs",
+    fat32 = "vfat",
+    swap = "swap",
+    null = "None/Other"
 }
 
 class Disk {
