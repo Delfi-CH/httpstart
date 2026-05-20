@@ -50,8 +50,7 @@
         ipaddr = tmpIpaddr.data
     });
 
-    onMount(() => {
-        data = Data.load();
+    $effect(() => {
         check1 = !(data.language === "-- Select a Language --" || data.language === undefined || data.language === null || data.language === "")
         check2 = !(data.timezone === undefined || data.timezone === null || data.timezone === "")
         check3 = true
@@ -272,6 +271,7 @@
         showClearModal = false
         if (clear) {
             Data.clear()
+            data = Data.load()
         }
     }}></ClearModal>
 {/if}
