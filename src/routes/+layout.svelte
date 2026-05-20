@@ -19,13 +19,13 @@
 	if (mode === "development" && distro === Distribution.Ubuntu) {
 		cssUrl = "/css/ubuntu/bootstrap.min.css";
 	} else if (mode === "development" && darkMode) {
-		cssUrl = "/css/dark/bootstrap.min.css";
+		cssUrl = "/css/light/bootstrap.min.css";
 	} else if (mode === "development") {
 		cssUrl = "/css/light/bootstrap.min.css";
 	} else if (distro === Distribution.Ubuntu) {
 		cssUrl = "/ui/css/ubuntu/bootstrap.min.css";
 	} else if (darkMode) {
-		cssUrl = "/ui/css/dark/bootstrap.min.css";
+		cssUrl = "/ui/css/light/bootstrap.min.css";
 	}
 </script>
 
