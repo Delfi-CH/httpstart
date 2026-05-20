@@ -24,7 +24,16 @@ Web-based installer for Linux Distributions
 
 ## TODO
 
+### Frontend
+
 Steps:
 
-- Disks
 - Packages
+
+Other stuff:
+
+- Partition Editor
+
+### Backend
+
+like everything
