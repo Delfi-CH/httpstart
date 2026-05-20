@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Data, User } from "$lib/data";
+    import { Data, User, Disk, DiskType } from "$lib/data";
     import langs from "$lib/data/langs.json";
     import { resolve } from "$app/paths";
     import {
@@ -20,6 +20,8 @@
     let allIsOk = $state(false)
 
     let userValidationErrorMsg = $state("")
+    let diskValidationErrorMsg = $state("")
+    let diskValidationWarnMsg = $state("")
 
     let check1 = $state(false)
     let check2 = $state(false)
@@ -50,7 +52,7 @@
         check1 = !(data.language === "-- Select a Language --" || data.language === undefined || data.language === null || data.language === "")
         check2 = !(data.timezone === undefined || data.timezone === null || data.timezone === "")
         check3 = true
-        check4 = true
+        check4 = validateDisks($state.snapshot(data.disks))
         check5a = validateUsers($state.snapshot(data.users))
         check5b = !(data.hostname === undefined || data.hostname === null || data.hostname === "")
         if (check1 && check2 && check3 && check4 && check5a && check5b) {
@@ -87,6 +89,27 @@
         ) {return true} else {
             return false
         }
+    }
+
+    function validateDisks(disks: Array<Disk>) {
+        if (!disks.some((d)=> d.type == DiskType.root)) {
+            diskValidationWarnMsg = ""
+            diskValidationErrorMsg = "No root Partition set!"
+            return false
+        } else if (!disks.some((d)=> d.type == DiskType.efi)) {
+            diskValidationWarnMsg = "No EFI Boot Partition set!"
+            return true
+        } else if (!disks.some((d)=> d.type == DiskType.swap)) {
+            diskValidationWarnMsg = "No SWAP Partition set!"
+            return true
+        } else if (!disks.some((d)=> d.type == DiskType.home)) {
+            diskValidationWarnMsg = "No Home Partition set!"
+            return true
+        } else {
+            diskValidationErrorMsg = "Big error"
+            return true
+        }
+        
     }
 </script>
 
@@ -158,7 +181,17 @@
                     <CardTitle>Disks</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
-                    <p>text</p>
+                    {#if check4}
+                        <p>Disks:</p>
+                        <div>
+                            {#each data.disks as disk, index (index)}
+                            <p>{disk.name}, {disk.filesystem} ({disk.mountpoints.join(",")})</p>
+                            {/each}
+                        </div>
+                        <p class="text-warning">{diskValidationWarnMsg}</p>
+                    {:else}
+                        <p class="text-danger">{diskValidationErrorMsg}</p>
+                    {/if}
                     <Button class="mt-auto w-50" href={resolve("/disks")}>Edit</Button>
                 </CardBody>
             </Card>
