@@ -15,7 +15,6 @@
     } from "@sveltestrap/sveltestrap";
     import axios from "axios";
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let serverURL = $state("");
     let data = $state(Data.load());
     let allIsOk = $state(false)
@@ -28,6 +27,8 @@
     let check4 = $state(false)
     let check5a = $state(false)
     let check5b = $state(false)
+    
+    let ipaddr = $state({ip: "0.0.0.0"})
 
     onMount(async () => {
         const mode = import.meta.env.MODE;
@@ -39,6 +40,9 @@
         data.distro = tmpDistro.data.distro
 
         data.save()
+
+        const tmpIpaddr = await axios.get(serverURL +"/api/ipadrr")
+        ipaddr = tmpIpaddr.data
     });
 
     onMount(() => {
@@ -88,7 +92,7 @@
 
 <Container>
     <Row>
-        <h1>{data.distro} Network Installer</h1>
+        <h1>{data.distro} Network Installer at {ipaddr.ip}</h1>
         <Col class="d-flex mt-3 mb-3">
             <Card color="dark" theme="dark" class="m-1 h-100 w-100">
                 <CardHeader class={check1 ? "bg-success":"bg-danger"}>
