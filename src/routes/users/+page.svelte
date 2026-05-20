@@ -43,6 +43,8 @@
             const data = Data.load();
             data.hostname = hostname;
             data.save();
+        } else {
+            console.log("invalid")
         }
     }
 
@@ -64,7 +66,6 @@
     $effect(() => {
         const data = Data.load();
         data.users = users;
-        data.hostname = hostname;
         data.save();
     });
 </script>
@@ -200,6 +201,7 @@
                         bind:value={hostname}
                         placeholder="e.g. ubuntu-server"
                         valid={hostnameIsValid}
+                        invalid={!hostnameIsValid}
                         id="hostselect"
                     ></Input>
                 </Label>
