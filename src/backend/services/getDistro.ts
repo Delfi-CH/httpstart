@@ -1,4 +1,4 @@
-import { Distribution } from "../lib/data.ts"
+import { Distribution } from "../../lib/data.ts"
 import linuxOsInfo from "@delfi-ch/linux-os-info-esmodule"
 
 export function getDistibution(): Distribution {
