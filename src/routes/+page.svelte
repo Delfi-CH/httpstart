@@ -14,6 +14,7 @@
         CardTitle,
     } from "@sveltestrap/sveltestrap";
     import axios from "axios";
+    import ClearModal from "$lib/components/ClearModal.svelte";
 
     let serverURL = $state("");
     let data = $state(Data.load());
@@ -22,6 +23,8 @@
     let userValidationErrorMsg = $state("")
     let diskValidationErrorMsg = $state("")
     let diskValidationWarnMsg = $state("")
+
+    let showClearModal = $state(false)
 
     let check1 = $state(false)
     let check2 = $state(false)
@@ -250,11 +253,25 @@
                             All steps completed sucessfully.
                         </span>
                     {/if}
+                    <div class="d-flex gap-2 align-items-center mt-auto">
                     <Button class="mt-auto w-50" href={resolve("/install")} color="danger" disabled={!allIsOk}
                         >Continiue</Button
                     >
+                    <Button class="mt-auto w-50" color="warning" onclick={()=> showClearModal = true}
+                        >Clear Data</Button
+                    >
+                    </div>
                 </CardBody>
             </Card>
         </Col>
     </Row>
 </Container>
+
+{#if showClearModal}
+    <ClearModal open={showClearModal} onClose={(clear: boolean)=>{
+        showClearModal = false
+        if (clear) {
+            Data.clear()
+        }
+    }}></ClearModal>
+{/if}

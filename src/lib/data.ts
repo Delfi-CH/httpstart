@@ -55,7 +55,7 @@ class Disk {
         this.mountpoints = mountpoints
         this.filesystem = filesystem
     }
-    
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static fromJSON(obj: any): Disk {
         return new Disk(
@@ -87,7 +87,7 @@ class Data {
     disks: Array<Disk>
     parentDisks: Array<ParentDisk>
     distro: Distribution
-    constructor(language: string, timezone: string, keymap:string, packages: Array<string>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>, distro: Distribution) {
+    constructor(language: string, timezone: string, keymap: string, packages: Array<string>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>, distro: Distribution) {
         this.language = language
         this.timezone = timezone
         this.keymap = keymap
@@ -106,21 +106,24 @@ class Data {
         const parsed = raw ? Data.fromJSON(JSON.parse(raw)) : new Data("", "", "", [], "", [], [], [], Distribution.Other)
         return parsed
     }
-    
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static fromJSON(obj: any): Data {
-    return new Data(
-      obj.language,
-      obj.timezone,
-      obj.keymap,
-      obj.packages,
-      obj.hostname,
-      obj.users,
-      obj.disks,
-      obj.parentDisks,
-      obj.distro
-    )
-  }
+        return new Data(
+            obj.language,
+            obj.timezone,
+            obj.keymap,
+            obj.packages,
+            obj.hostname,
+            obj.users,
+            obj.disks,
+            obj.parentDisks,
+            obj.distro
+        )
+    }
+    static clear() {
+        localStorage.setItem("data", JSON.stringify(new Data("", "", "", [], "", [], [], [], Distribution.Other)))
+    }
 }
 
 enum Distribution {
