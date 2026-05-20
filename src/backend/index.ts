@@ -1,9 +1,10 @@
 import express from "express";
 import { argv } from "node:process";
 import cors from "cors";
-import {getDiskInformation} from "./getDisks.ts"
-import { getDistibution } from "./getDistro.ts";
-import { getIpAdress } from "./getIp.ts";
+import {getDiskInformation} from "./services/getDisks.ts"
+import { getDistibution } from "./services/getDistro.ts";
+import { getIpAdress } from "./services/getIp.ts";
+import { getRepos } from "./services/getPackages.ts";
 
 const app = express();
 app.use(cors())
@@ -30,6 +31,10 @@ app.get("/api/distro", (req,res)=>{
 
 app.get("/api/ipadrr", (req, res)=>{
     res.send({ip: getIpAdress()})
+})
+
+app.get("/api/pkg/repos", (req, res)=> {
+    res.send(getRepos())
 })
 
 app.listen(port, "0.0.0.0", ()=>{

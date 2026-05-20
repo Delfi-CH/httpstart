@@ -81,13 +81,13 @@ class Data {
     language: string
     timezone: string
     keymap: string
-    packages: Array<string>
+    packages: Array<Package>
     hostname: string
     users: Array<User>
     disks: Array<Disk>
     parentDisks: Array<ParentDisk>
     distro: Distribution
-    constructor(language: string, timezone: string, keymap: string, packages: Array<string>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>, distro: Distribution) {
+    constructor(language: string, timezone: string, keymap: string, packages: Array<Package>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>, distro: Distribution) {
         this.language = language
         this.timezone = timezone
         this.keymap = keymap
@@ -139,6 +139,30 @@ enum Distribution {
     Other = "Linux"
 }
 
+class PackageRepository {
+    name: string
+    queryUrl: string
+    enabled: boolean
+    constructor(name: string, queryUrl: string, enabled: boolean) {
+        this.name = name
+        this.queryUrl = queryUrl
+        this.enabled = enabled
+    }
+}
+
+class Package {
+    name: string
+    desc: string
+    url: string
+    repo: PackageRepository
+    constructor(name: string, desc: string, url: string, repo: PackageRepository) {
+        this.name = name
+        this.desc = desc
+        this.url = url
+        this.repo = repo
+    }
+}
+
 const httpstartVersion = "0.1.0"
 
-export { Data, Disk, User, Filesystem, DiskType, ParentDisk, Distribution, httpstartVersion }
+export { Data, Disk, User, Filesystem, DiskType, ParentDisk, Distribution, httpstartVersion, PackageRepository,Package }
