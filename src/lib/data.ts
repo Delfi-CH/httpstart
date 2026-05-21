@@ -81,13 +81,13 @@ class Data {
     language: string
     timezone: string
     keymap: string
-    packages: Array<Package>
+    packages: Array<string>
     hostname: string
     users: Array<User>
     disks: Array<Disk>
     parentDisks: Array<ParentDisk>
     distro: Distribution
-    constructor(language: string, timezone: string, keymap: string, packages: Array<Package>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>, distro: Distribution) {
+    constructor(language: string, timezone: string, keymap: string, packages: Array<string>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>, distro: Distribution) {
         this.language = language
         this.timezone = timezone
         this.keymap = keymap
@@ -141,28 +141,49 @@ enum Distribution {
 
 class PackageRepository {
     name: string
+    description: string
     queryUrl: string
     enabled: boolean
-    constructor(name: string, queryUrl: string, enabled: boolean) {
+    allowDisable: boolean
+    constructor(name: string, description: string, queryUrl: string, enabled: boolean, allowDisable: boolean) {
         this.name = name
+        this.description = description
         this.queryUrl = queryUrl
         this.enabled = enabled
+        this.allowDisable = allowDisable
     }
 }
 
-class Package {
+class PackageGroup {
     name: string
     desc: string
-    url: string
-    repo: PackageRepository
-    constructor(name: string, desc: string, url: string, repo: PackageRepository) {
-        this.name = name
+    packages: Array<string>
+    repos: Array<PackageRepository>
+    enabled: boolean
+    allowDisable: boolean
+    constructor(name: string, desc: string, packages: Array<string>, repos: Array<PackageRepository>,enabled: boolean, allowDisable: boolean) {
+        this.name =  name
         this.desc = desc
-        this.url = url
-        this.repo = repo
+        this.packages = packages
+        this.repos = repos
+        this.enabled = enabled
+        this.allowDisable = allowDisable
     }
+}
+
+enum DistroPackageQueryUrl {
+    Ubuntu = "Ubuntu",
+    Debian = "Debian GNU/Linux",
+    Fedora = "Fedora Linux",
+    Alma = "AlmaLinux",
+    RHEL = "Red Hat Enterprise Linux",
+    OpenSUSE_Tumbleweed = "openSUSE Tumbleweed",
+    OpenSUSE_LEAP = "openSUSE Leap",
+    Alpine = "Alpine Linux",
+    ArchLinux = "https://www.archlinux.org/packages/search/json/",
+    Other = "/"
 }
 
 const httpstartVersion = "0.1.0"
 
-export { Data, Disk, User, Filesystem, DiskType, ParentDisk, Distribution, httpstartVersion, PackageRepository,Package }
+export { Data, Disk, User, Filesystem, DiskType, ParentDisk, Distribution, httpstartVersion, PackageRepository, PackageGroup, DistroPackageQueryUrl }

@@ -4,7 +4,8 @@ import cors from "cors";
 import {getDiskInformation} from "./services/getDisks.ts"
 import { getDistibution } from "./services/getDistro.ts";
 import { getIpAdress } from "./services/getIp.ts";
-import { getRepos } from "./services/getPackages.ts";
+import { getPackageGroups, getRepos } from "./services/getPackages.ts";
+import axios from "axios";
 
 const app = express();
 app.use(cors())
@@ -35,6 +36,19 @@ app.get("/api/ipadrr", (req, res)=>{
 
 app.get("/api/pkg/repos", (req, res)=> {
     res.send(getRepos())
+})
+
+app.get("/api/pkg/groups", (req, res)=> {
+    res.send(getPackageGroups())
+})
+
+app.post("/api/pkg/query", async (req, res) =>{
+    const queryUrl = req.body.queryUrl
+    console.log("Querying " + queryUrl)
+    const result = (await axios.get(String(queryUrl))).data.results.map((p)=>{
+        return {name: p.pkgname, repo: p.repo}
+    })
+    res.send(result)
 })
 
 app.listen(port, "0.0.0.0", ()=>{
