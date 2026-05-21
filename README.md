@@ -10,6 +10,7 @@ Web-based installer for Linux Distributions
 
 ### Work in Progress
 
+- ArchLinux
 - Debian 13
 
 ### Planned
@@ -18,7 +19,6 @@ Web-based installer for Linux Distributions
 - AlmaLinux 10
 - Fedora 44
 - Alpine
-- ArchLinux
 - OpenSUSE Leap
 - OpenSUSE Tumbleweed
 
@@ -36,4 +36,4 @@ Other stuff:
 
 ### Backend
 
-like everything
+like everything that isnt shoving data to the frontend
