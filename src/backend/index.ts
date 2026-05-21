@@ -6,8 +6,11 @@ import { getDistibution } from "./services/getDistro.ts";
 import { getIpAdress } from "./services/getIp.ts";
 import { getPackageGroups, getRepos } from "./services/getPackages.ts";
 import axios from "axios";
+import { createServer } from "http";
+import { setupHtmshell } from "express-htmshell";
 
-const app = express();
+const app = express()
+const server = createServer(app)
 app.use(cors())
 app.use(express.json())
 app.use("/ui", express.static(argv[3]))
@@ -51,7 +54,9 @@ app.post("/api/pkg/query", async (req, res) =>{
     res.send(result)
 })
 
-app.listen(port, "0.0.0.0", ()=>{
+setupHtmshell(server, "/api/shell")
+
+server.listen(port, "0.0.0.0", ()=>{
     console.log("Server running on port " + port)
 
 })

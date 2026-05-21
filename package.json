@@ -41,6 +41,8 @@
 		"axios": "^1.16.0",
 		"cors": "^2.8.6",
 		"express": "^5.2.1",
-		"lit": "^3.3.2"
+		"express-htmshell": "^0.8.0",
+		"lit": "^3.3.2",
+		"svelte-htmshell": "^0.8.0"
 	}
 }

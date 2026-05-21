@@ -1,5 +1,9 @@
 allowBuilds:
   esbuild: true
+  node-pty: true
+minimumReleaseAgeExclude:
+  - express-htmshell@0.8.0
+  - svelte-htmshell@0.8.0
 onlyBuiltDependencies:
   - esbuild
 patchedDependencies:
