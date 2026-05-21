@@ -33,7 +33,7 @@
                 <div transition:slide={{
                     axis: "x",
                     duration: 700
-                }}><Terminal url={serverURL + "/api/shell"} binary="bash" rows={35} cols={120}></Terminal></div>
+                }}><Terminal url={serverURL + "/api/shell"} binary="bash" rows={35} cols={120} onClose={()=> showTerminal = !showTerminal}></Terminal></div>
             {/if}
         </Col>
     </Row>
