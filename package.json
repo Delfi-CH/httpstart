@@ -19,30 +19,30 @@
 		"@eslint/compat": "^2.1.0",
 		"@eslint/js": "^10.0.1",
 		"@sveltejs/adapter-static": "^3.0.10",
-		"@sveltejs/kit": "^2.59.1",
+		"@sveltejs/kit": "^2.60.1",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@types/cors": "^2.8.19",
 		"@types/express": "^5.0.6",
 		"@types/node": "^22.19.19",
 		"esbuild": "0.28.0",
-		"eslint": "^10.3.0",
+		"eslint": "^10.4.0",
 		"eslint-plugin-svelte": "^3.17.1",
 		"globals": "^17.6.0",
-		"svelte": "^5.55.5",
+		"svelte": "^5.55.9",
 		"svelte-check": "^4.4.8",
-		"tsx": "^4.22.1",
+		"tsx": "^4.22.3",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.59.3",
-		"vite": "^8.0.12"
+		"typescript-eslint": "^8.59.4",
+		"vite": "^8.0.14"
 	},
 	"dependencies": {
 		"@delfi-ch/linux-os-info-esmodule": "^2.0.3",
 		"@sveltestrap/sveltestrap": "^7.1.0",
-		"axios": "^1.16.0",
+		"axios": "^1.16.1",
 		"cors": "^2.8.6",
 		"express": "^5.2.1",
 		"express-htmshell": "^0.8.1",
-		"lit": "^3.3.2",
+		"lit": "^3.3.3",
 		"svelte-htmshell": "^0.9.1"
 	}
 }

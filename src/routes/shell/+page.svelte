@@ -20,13 +20,12 @@
         <Col>
             {#if showTerminal}
                 <div transition:blur={{
-                    delay: 400,
                     duration: 400
                 }}><DynamicTerminal url={serverURL + "/api/shell"} binary="bash" onClose={()=> showTerminal = false}></DynamicTerminal></div>
             {/if}
             {#if !showTerminal}
                 <div transition:blur={{
-                    delay: 400,
+                    delay: 100,
                     duration: 400
                 }}><Button onclick={()=> showTerminal = true}>Restart Terminal</Button></div>
             {/if}
