@@ -27,14 +27,14 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1
       express-htmshell:
-        specifier: ^0.8.0
-        version: 0.8.0
+        specifier: ^0.8.1
+        version: 0.8.1
       lit:
         specifier: ^3.3.2
         version: 3.3.3
       svelte-htmshell:
-        specifier: ^0.8.0
-        version: 0.8.0(@typescript-eslint/types@8.59.3)(typescript@6.0.3)
+        specifier: ^0.9.1
+        version: 0.9.1(@typescript-eslint/types@8.59.3)(typescript@6.0.3)
     devDependencies:
       '@eslint/compat':
         specifier: ^2.1.0
@@ -627,6 +627,9 @@ packages:
     resolution: {integrity: sha512-f1UQF7ggd42YiwI5wGrRaPsa+P0CINBlrkLPmGfpq/u/I/oVtecoEIfFR9ag/oa1sLOsRNZ6xehf6qMZhQGBDg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@xterm/addon-fit@0.11.0':
+    resolution: {integrity: sha512-jYcgT6xtVYhnhgxh3QgYDnnNMYTcf8ElbxxFzX0IZo+vabQqSPAjC3c1wJrKB5E19VwQei89QCiZZP86DCPF7g==}
+
   '@xterm/xterm@6.0.0':
     resolution: {integrity: sha512-TQwDdQGtwwDt+2cgKDLn0IRaSxYu1tSUjgKarSDkUM0ZNiSRXFpjxEsvc/Zgc5kq5omJ+V0a8/kIM2WD3sMOYg==}
 
@@ -894,8 +897,8 @@ packages:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
 
-  express-htmshell@0.8.0:
-    resolution: {integrity: sha512-Zfs68Kr3n1c1TJ5uP+9TL5I/eKgWOazG+MtjZdqf2HboTanyPR4esXqF9o6f+Ot0NFVv2AovRZoX0mErRtIgLA==}
+  express-htmshell@0.8.1:
+    resolution: {integrity: sha512-gjMebNHo2JqP+70w9apZ9/M+zltVT8HZ+1/nIyvR8T6R3V0c0TFVTSGA7AWwnpf3lK13q/afpXma2sWZw7NXaQ==}
 
   express@5.2.1:
     resolution: {integrity: sha512-hIS4idWWai69NezIdRt2xFVofaF4j+6INOpJlVOLDO8zXGpUVEVzIYk12UUi2JzjEzWL3IOAxcTubgz9Po0yXw==}
@@ -1443,8 +1446,8 @@ packages:
       svelte:
         optional: true
 
-  svelte-htmshell@0.8.0:
-    resolution: {integrity: sha512-SQPvxUJPzlJ/+HQR1BAdw9qyU/F4vkpK7XmjQiJvgZF5UEAPoOdXq1d4eilo9N+Z8gBNU63o3UUfiRY2lDkleg==}
+  svelte-htmshell@0.9.1:
+    resolution: {integrity: sha512-jTMSFKLALhsWtuDueWw1RLn6OB4pojdxay1iKMn2r/9hTPKd8Pmtzrm1tQ1cYYlgY5LHRcImv3ZBodGVgoxINA==}
 
   svelte2tsx@0.7.55:
     resolution: {integrity: sha512-JWzgeM3lqySRNfqcsesvVEh8LhTWBxQJ9RMjzJ+VepdmXtVnNd0SbtGctG6+/fbHq0N6mhwSd823gszw9JHeGQ==}
@@ -2062,6 +2065,8 @@ snapshots:
       '@typescript-eslint/types': 8.59.3
       eslint-visitor-keys: 5.0.1
 
+  '@xterm/addon-fit@0.11.0': {}
+
   '@xterm/xterm@6.0.0': {}
 
   accepts@2.0.0:
@@ -2356,7 +2361,7 @@ snapshots:
 
   etag@1.8.1: {}
 
-  express-htmshell@0.8.0:
+  express-htmshell@0.8.1:
     dependencies:
       express: 5.2.1
       node-pty: 1.1.0
@@ -2907,9 +2912,10 @@ snapshots:
     optionalDependencies:
       svelte: 5.55.7(@typescript-eslint/types@8.59.3)
 
-  svelte-htmshell@0.8.0(@typescript-eslint/types@8.59.3)(typescript@6.0.3):
+  svelte-htmshell@0.9.1(@typescript-eslint/types@8.59.3)(typescript@6.0.3):
     dependencies:
       '@sveltejs/package': 2.5.7(svelte@5.55.9(@typescript-eslint/types@8.59.3))(typescript@6.0.3)
+      '@xterm/addon-fit': 0.11.0
       '@xterm/xterm': 6.0.0
       svelte: 5.55.9(@typescript-eslint/types@8.59.3)
     transitivePeerDependencies:

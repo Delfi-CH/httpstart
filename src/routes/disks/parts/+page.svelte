@@ -3,7 +3,7 @@
     import { onMount } from "svelte";
     import axios from "axios";
     import { resolve } from "$app/paths";
-    import Terminal from "svelte-htmshell";
+    import DynamicTerminal from "svelte-htmshell/dynamic";
     import { slide } from "svelte/transition";
 
     let ipaddr = $state({ip: "0.0.0.0"})
@@ -33,7 +33,7 @@
                 <div transition:slide={{
                     axis: "x",
                     duration: 700
-                }}><Terminal url={serverURL + "/api/shell"} binary="bash" rows={35} cols={120} onClose={()=> showTerminal = !showTerminal}></Terminal></div>
+                }}><DynamicTerminal url={serverURL + "/api/shell"} binary="bash" onClose={()=> showTerminal = false}></DynamicTerminal></div>
             {/if}
         </Col>
     </Row>

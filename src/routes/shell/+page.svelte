@@ -1,8 +1,8 @@
 <script>
     import { Container, Row, Col, Button } from "@sveltestrap/sveltestrap";
-    import Terminal from "svelte-htmshell";
     import { onMount } from "svelte";
     import { blur } from "svelte/transition";
+    import DynamicTerminal from "svelte-htmshell/dynamic";
 
     let serverURL = $state("");
     let showTerminal = $state(true)
@@ -22,7 +22,7 @@
                 <div transition:blur={{
                     delay: 400,
                     duration: 400
-                }}><Terminal url={serverURL + "/api/shell"} binary="bash" rows={35} cols={120} onClose={()=> showTerminal = false}></Terminal></div>
+                }}><DynamicTerminal url={serverURL + "/api/shell"} binary="bash" onClose={()=> showTerminal = false}></DynamicTerminal></div>
             {/if}
             {#if !showTerminal}
                 <div transition:blur={{
