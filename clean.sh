@@ -5,7 +5,7 @@
 # Script for cleaning up the bundeling of the linux-web-installer
 
 # Params:
-# type (options: deb, rpm, tgz, all, none)
+# type (options: deb, rpm, tgz, pacman, all, none)
 
 # Usage:
 # Best invoked via package.json
@@ -83,5 +83,38 @@ if [ "$type" == "tgz" ] || [ "$type" == "all" ]; then
     fi
 
     echo "Deleting tar.gz specific files was sucessfull!"
+fi
+
+if [ "$type" == "pacman" ] || [ "$type" == "all" ]; then
+    echo "Deleting Arch Linux specific files..."
+    rm -f dist/httpstart-.pkg.tar.zst
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "Deleting Arch Linux specific files failed!"
+        exit 1
+    fi
+
+    rm -rf dist/httpstart-pacman/httpstart
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "Deleting Arch Linux specific files failed!"
+        exit 1
+    fi
+
+    rm -rf dist/httpstart-pacman/src
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "Deleting Arch Linux specific files failed!"
+        exit 1
+    fi
+
+    rm -rf dist/httpstart-pacman/pkg
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "Deleting Arch Linux specific files failed!"
+        exit 1
+    fi
+
+    echo "Deleting Arch Linux specific files was sucessfull!"
 fi
 exit 0

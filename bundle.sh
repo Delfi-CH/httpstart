@@ -5,7 +5,7 @@
 # Script for bundeling the linux-web-installer
 
 # Params:
-# type (options: deb, rpm, tgz, all, none)
+# type (options: deb, rpm, tgz, pacman, all, none)
 
 # Usage:
 # Best invoked via package.json
@@ -109,7 +109,7 @@ bundle_debian () {
 
     echo "Copying metadata..."
 
-    pushd dist/httpstart-debian &> /dev/null
+    pushd dist/httpstart-debian &> /dev/null || exit 1
     gzip -9 -n -k DEBIAN/changelog &> /dev/null
     status=$?
     if [ "$status" != 0 ]; then
@@ -131,19 +131,19 @@ bundle_debian () {
         echo "Copying metadata failed!"
         exit 1
     fi
-    popd &> /dev/null
+    popd &> /dev/null || exit 1
 
 
     echo "Building .deb file..."
 
-    pushd dist &> /dev/null 
+    pushd dist &> /dev/null || exit 1
     dpkg-deb --root-owner-group --build httpstart-debian/ &> /dev/null
     status=$?
     if [ "$status" != 0 ]; then
         echo "Building .deb file failed!"
         exit 1
     fi
-    popd &> /dev/null
+    popd &> /dev/null || exit 1
     echo "Building .deb file was sucessfull!"
 }
 
@@ -178,6 +178,49 @@ bundle_tgz () {
     echo "Creating tar.gz was sucessfull"
 }
 
+bundle_pacman () {
+    echo "Testing for pacman..."
+    type pacman &> /dev/null
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "pacman wasnt found in \$PATH!"
+        echo "Aborting..."
+        exit 1
+    fi
+    echo "pacman was found!"
+
+    echo "Testing for makepkg..."
+    type makepkg &> /dev/null
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "makepkg wasnt found in \$PATH!"
+        echo "Aborting..."
+        exit 1
+    fi
+    echo "makepkg was found!"
+
+    echo "Creating Package..."
+    pushd dist/httpstart-pacman &> /dev/null || exit 1
+
+    makepkg -f &> /dev/null
+    if [ "$status" != 0 ]; then
+        echo "Creating Package failed!"
+        echo "Aborting..."
+        exit 1
+    fi
+    echo "Creating Package was sucessfull"
+    
+    echo "Copying Package..."
+    mv httpstart-*.pkg.tar.zst ../ &> /dev/null
+    if [ "$status" != 0 ]; then
+        echo "Copying Package failed!"
+        echo "Aborting..."
+        exit 1
+    fi
+    popd &> /dev/null || exit 1
+    echo "Copying Package was sucessfull"
+}
+
 if [ "$type" == "deb" ] || [ "$type" == "all" ]; then
     echo "Bundeling for Debian (dpkg)..."
     bundle_debian
@@ -186,4 +229,9 @@ fi
 if [ "$type" == "tgz" ] || [ "$type" == "all" ]; then
     echo "Bundeling for tar.gz (tgz)..."
     bundle_tgz
+fi
+
+if [ "$type" == "pacman" ] || [ "$type" == "all" ]; then
+    echo "Bundeling for Arch Linux (pacman)..."
+    bundle_pacman
 fi
