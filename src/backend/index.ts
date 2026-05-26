@@ -57,6 +57,7 @@ app.post("/api/pkg/query", async (req, res) =>{
 setupHtmshell(server, "/api/shell")
 
 server.listen(port, "0.0.0.0", ()=>{
+    process.title = "httpstart"
     console.log("Server running on port " + port)
 
 })
