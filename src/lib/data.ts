@@ -80,7 +80,6 @@ class ParentDisk {
 class Data {
     language: string
     timezone: string
-    keymap: string
     packages: Array<string>
     hostname: string
     users: Array<User>
@@ -90,7 +89,6 @@ class Data {
     constructor(language: string, timezone: string, keymap: string, packages: Array<string>, hostname: string, users: Array<User>, disks: Array<Disk>, parentDisks: Array<ParentDisk>, distro: Distribution) {
         this.language = language
         this.timezone = timezone
-        this.keymap = keymap
         this.packages = packages
         this.hostname = hostname
         this.users = users

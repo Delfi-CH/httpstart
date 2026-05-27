@@ -2,6 +2,8 @@
     import { Container, Row, Col, Button } from "@sveltestrap/sveltestrap";
     import { Data, User, Disk, DiskType, Distribution } from "$lib/data";
     import { onMount } from "svelte";
+    import { goto } from "$app/navigation";
+    import { resolve } from "$app/paths";
 
     let data = $state(Data.load());
 
@@ -142,7 +144,9 @@
         </Row>
         <Row>
             <Col>
-                <Button color="danger" size="lg">Start Installation</Button>
+                <Button color="danger" size="lg" disabled={!allIsOk} onclick={()=>{
+                    goto(resolve("/install/progress"))
+                }}>Start Installation</Button>
             </Col>
         </Row>
     </Container>

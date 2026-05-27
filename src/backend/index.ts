@@ -4,8 +4,7 @@ import cors from "cors";
 import {getDiskInformation} from "./services/getDisks.ts"
 import { getDistibution } from "./services/getDistro.ts";
 import { getIpAdress } from "./services/getIp.ts";
-import { getPackageGroups, getRepos } from "./services/getPackages.ts";
-import axios from "axios";
+import { getPackageGroups, getRepos, queryPackages } from "./services/getPackages.ts";
 import { createServer } from "http";
 import { setupHtmshell } from "express-htmshell";
 
@@ -16,6 +15,7 @@ app.use(express.json())
 app.use("/ui", express.static(argv[3]))
 
 const port = Number(argv[2]);
+let installInProgress = false
 
 app.get("/", (req,res)=>{
     res.redirect("/ui")
@@ -48,10 +48,19 @@ app.get("/api/pkg/groups", (req, res)=> {
 app.post("/api/pkg/query", async (req, res) =>{
     const queryUrl = req.body.queryUrl
     console.log("Querying " + queryUrl)
-    const result = (await axios.get(String(queryUrl))).data.results.map((p)=>{
-        return {name: p.pkgname, repo: p.repo}
-    })
+    const result = await queryPackages(queryUrl)
     res.send(result)
+})
+
+app.post("/api/install", (req, res)=>{
+    const data = req.body.data
+    if (installInProgress) {
+        res.sendStatus(226)
+    } else {
+        installInProgress = true
+        console.log(data)
+        res.sendStatus(201)
+    }
 })
 
 setupHtmshell(server, "/api/shell")
