@@ -7,6 +7,7 @@ import { getIpAdress } from "./services/getIp.ts";
 import { getPackageGroups, getRepos, queryPackages } from "./services/getPackages.ts";
 import { createServer } from "http";
 import { setupHtmshell } from "express-htmshell";
+import { beginInstall } from "./services/install/doInstall.ts";
 
 const app = express()
 const server = createServer(app)
@@ -58,7 +59,7 @@ app.post("/api/install", (req, res)=>{
         res.sendStatus(226)
     } else {
         installInProgress = true
-        console.log(data)
+        beginInstall(data)
         res.sendStatus(201)
     }
 })
