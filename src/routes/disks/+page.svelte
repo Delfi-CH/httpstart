@@ -245,6 +245,9 @@
         showEditModal = false
         if (editingIndex !== null) {
             usedGroupedDisks[editingIndex] = disk
+
+            data.disks = usedGroupedDisks
+            data.save()
         }
     }}></DiskEditModal>
     {/if}
