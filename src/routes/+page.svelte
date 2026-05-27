@@ -221,7 +221,6 @@
                         {:else}
                             {#each data.users as user, index (index)}
                                 {user.username}
-                                <span> </span>
                             {/each}
                         {/if}
                     </p>
