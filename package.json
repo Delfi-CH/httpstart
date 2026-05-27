@@ -36,6 +36,7 @@
 		"vite": "^8.0.14"
 	},
 	"dependencies": {
+		"@aredridel/svelte-timezone-map-select": "^2.0.0",
 		"@delfi-ch/linux-os-info-esmodule": "^2.0.3",
 		"@sveltestrap/sveltestrap": "^7.1.0",
 		"axios": "^1.16.1",
