@@ -28,6 +28,13 @@ status=$?
 if [ "$status" != 0 ]; then
     echo "Bundeling backend failed!"
     exit 1
+fi
+
+cp -r node_modules dist/node_modules &> /dev/null
+status=$?
+if [ "$status" != 0 ]; then
+    echo "Bundeling backend failed!"
+    exit 1
 else
     echo "Bundeling backend was sucessfull!"
 fi
@@ -104,6 +111,13 @@ bundle_debian () {
         echo "Copying files failed!"
         exit 1
     fi
+
+    cp -r dist/node_modules dist/httpstart-debian/usr/share/httpstart/node_modules
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "Copying files failed!"
+        exit 1
+    fi
     
     echo "Copying files was sucessfull!"
 
@@ -169,7 +183,7 @@ bundle_tgz () {
     echo "gzip was found!"
 
     echo "Creating tar.gz..."
-    tar -czf dist/httpstart.tar.gz dist/ui dist/httpstart README.md LICENSE
+    tar -czf dist/httpstart.tar.gz dist/ui dist/httpstart README.md LICENSE dist/node_modules
     if [ "$status" != 0 ]; then
         echo "Creating tar.gz failed!"
         echo "Aborting..."

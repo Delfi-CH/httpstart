@@ -57,13 +57,16 @@ fi
 echo "NodeJS found in path..."
 
 echo "Checking if port 29222 is open..."
-lsof -Pi :29222 -sTCP:LISTEN -t
-status=$? &> /dev/null
+lsof -Pi :29222 -sTCP:LISTEN -t &> /dev/null
+status=$?
 if [ "$status" == 0 ]; then
     echo "Port 29222 is already in use!"
     echo "Aborting..."
     exit 2
 fi
+
+SCRIPT_DIR="$(cd "$(dirname "$index")" && pwd)"
+cd "$SCRIPT_DIR" || return
 
 node $index 29222 $uipath
 status=$?

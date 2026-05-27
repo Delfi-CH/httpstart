@@ -29,6 +29,7 @@ package() {
     install -Dm755 dist/httpstart  -t "$pkgdir/usr/bin/"
     install -Dm755 dist/index.cjs -t "$pkgdir/usr/share/httpstart/"
     cp -r dist/ui "$pkgdir/usr/share/httpstart/"
+    cp -r dist/node_modules "$pkgdir/usr/share/httpstart/"
 
     install -Dm755 dist/httpstart.service -t "$pkgdir/usr/lib/systemd/system/"
 }
