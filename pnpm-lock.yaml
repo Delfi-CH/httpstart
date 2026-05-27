@@ -35,6 +35,9 @@ importers:
       lit:
         specifier: ^3.3.3
         version: 3.3.3
+      node-pty:
+        specifier: ^1.1.0
+        version: 1.1.0
       svelte-htmshell:
         specifier: ^0.9.3
         version: 0.9.3(@typescript-eslint/types@8.59.4)(typescript@6.0.3)
