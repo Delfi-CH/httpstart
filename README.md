@@ -26,14 +26,16 @@ Web-based installer for Linux Distributions
 
 ### Frontend
 
-Steps:
-
-- Packages
-
-Other stuff:
-
-- Partition Editor
+Displaying backend progress
 
 ### Backend
 
 like everything that isnt shoving data to the frontend
+
+## Planned Features
+
+### Frontend
+
+Other stuff:
+
+- actual Partition Editor
