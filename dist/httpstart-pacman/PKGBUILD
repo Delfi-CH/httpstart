@@ -8,7 +8,7 @@ arch=('x86_64')
 url="https://github.com/Delfi-CH/"
 license=('GPL-3.0-or-later')
 
-depends=('nodejs')
+depends=('nodejs' 'lsof')
 
 makedepends=('pnpm')
 
