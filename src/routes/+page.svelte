@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Data, User, Disk, DiskType } from "$lib/data";
+    import { Data, User, Disk, DiskType, Distribution } from "$lib/data";
     import langs from "$lib/data/langs.json";
     import { resolve } from "$app/paths";
     import {
@@ -53,7 +53,7 @@
     $effect(() => {
         check1 = !(data.language === "-- Select a Language --" || data.language === undefined || data.language === null || data.language === "")
         check2 = !(data.timezone === undefined || data.timezone === null || data.timezone === "")
-        check3 = true
+        check3 = validatePackages($state.snapshot(data.packages))
         check4 = validateDisks($state.snapshot(data.disks))
         check5a = validateUsers($state.snapshot(data.users))
         check5b = !(data.hostname === undefined || data.hostname === null || data.hostname === "")
@@ -113,6 +113,13 @@
         }
         
     }
+
+    function validatePackages(packages: Array<string>): boolean {
+        switch (data.distro) {
+            case Distribution.ArchLinux: return packages.length >= 3 && packages.includes("base") && packages.includes("linux-firmware") && packages.includes("linux")
+            default: return false
+        }
+    }
 </script>
 
 <Container>
@@ -170,7 +177,7 @@
                     <CardTitle>Additional Software</CardTitle>
                 </CardHeader>
                 <CardBody class="d-flex flex-column">
-                    <p>text</p>
+                    <p>Selected {data.packages.length} Packages</p>
                     <Button class="mt-auto w-50" href={resolve("/packages")}>Edit</Button>
                 </CardBody>
             </Card>
