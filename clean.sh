@@ -36,6 +36,14 @@ if [ "$status" != 0 ]; then
     exit 1
 fi
 
+rm -rf dist/node_modules
+status=$?
+if [ "$status" != 0 ]; then
+    echo "Deleting shared files failed!"
+    exit 1
+fi
+
+
 echo "Deleting shared files was sucessfull!"
 
 if [ "$type" == "deb" ] || [ "$type" == "all" ]; then

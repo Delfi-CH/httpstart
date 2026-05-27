@@ -30,7 +30,7 @@ if [ "$status" != 0 ]; then
     exit 1
 fi
 
-cp -r node_modules dist/node_modules &> /dev/null
+cp -r node_modules dist/ &> /dev/null
 status=$?
 if [ "$status" != 0 ]; then
     echo "Bundeling backend failed!"
