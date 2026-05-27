@@ -1,4 +1,5 @@
 import { PackageRepository, PackageGroup } from "../../../lib/data";
+import axios from "axios";
 
 const repoCore = new PackageRepository("Core", "Contains all Packages required for installing and running Arch Linux (e.g. the Linux Kernel, pacman, coreutils).", "https://archlinux.org/packages/Core/", true, false)
 const repoExtra = new PackageRepository("Extra", "Contains Software that is not strictly required for running Arch Linux (e.g. Graphical Interfaces, Webbrowsers, most apps).", "https://archlinux.org/packages/Extra/", true, false)
@@ -100,4 +101,10 @@ export function getPackageGroups_ArchLinux() {
     ]
 
     return groupList
+}
+
+export async function queryPackages_ArchLinux(queryUrl: string) {
+    return (await axios.get(String(queryUrl))).data.results.map((p)=>{
+        return {name: p.pkgname, repo: p.repo}
+    })
 }
