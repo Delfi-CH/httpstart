@@ -20,7 +20,7 @@ export function getPackageGroups_ArchLinux() {
     const groupBase = new PackageGroup(
         "Base",
         "All packages that are needed for a working Install of ArchLinux.",
-        ["base", "linux", "linux-firmware", "nano", "vi", "vim", "sudo", "networkmanager", "amd-ucode", "intel-ucode", "mandb", "man-pages", "texinfo", "openssh", "grub", "efibootmgr", "zsh", "fish", "fastfetch", "btop"],
+        ["base", "linux", "linux-firmware", "nano", "vi", "vim", "sudo", "networkmanager", "amd-ucode", "intel-ucode", "man-db", "man-pages", "texinfo", "openssh", "grub", "efibootmgr", "zsh", "fish", "fastfetch", "btop"],
         [repoCore, repoExtra],
         true,
         false
