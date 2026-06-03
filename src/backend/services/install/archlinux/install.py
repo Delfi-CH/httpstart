@@ -45,7 +45,7 @@ def format_and_mount(disks):
     disks = sorted(disks, key=lambda d: d["mountpoints"][0] != "/")
 
     for d in disks:
-        disk = d["name"]
+        disk = "/dev/" + d["name"]
         fs = d["filesystem"]
         mp = d.get("mountpoints", [None])[0]
 
