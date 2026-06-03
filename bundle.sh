@@ -222,6 +222,16 @@ bundle_pacman () {
         exit 1
     fi
     echo "Creating Package was sucessfull"
+
+    echo "Creating local Repository..."
+
+    repo-add /tmp/httpstart.db.tar.zst httpstart-*.pkg.tar.zst &> /dev/null
+    if [ "$status" != 0 ]; then
+        echo "Creating local Repository failed!"
+        echo "Aborting..."
+        exit 1
+    fi
+    echo "Creating local Repository was sucessfull"
     
     echo "Copying Package..."
     mv httpstart-*.pkg.tar.zst ../ &> /dev/null

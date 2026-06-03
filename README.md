@@ -38,6 +38,8 @@ fixes, lots of fixes
 
 There are no releases yet.
 
+### ArchLinux Live ISO
+
 ## Packaging
 
 We include a script named `bundle.sh`, which autobundles deb, rpm, tar.gz and pacman
