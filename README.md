@@ -28,14 +28,46 @@ Web-based installer for Linux Distributions
 
 Displaying backend progress
 
+Actual Partition Editor that inst just cfdisk
+
 ### Backend
 
-like everything that isnt shoving data to the frontend
+fixes, lots of fixes
 
-## Planned Features
+## Installation
 
-### Frontend
+There are no releases yet.
 
-Other stuff:
+## Packaging
 
-- actual Partition Editor
+We include a script named `bundle.sh`, which autobundles deb, rpm, tar.gz and pacman
+
+### Packaging for Debian/Ubuntu
+
+Run
+
+```bash
+./bundle.sh deb
+```
+
+Output: `dist/httpstart-debian.deb`
+
+### Packaging for RPM-based systems
+
+**NOT IMPLEMENTED YET**
+
+Run
+
+```bash
+./bundle.sh rpm
+```
+
+### Packaging for ArchLinux
+
+Run
+
+```bash
+./bundle.sh pacman
+```
+
+Output: `dist/httpstart-{version}-{architecture}.pkg.tar.zst`

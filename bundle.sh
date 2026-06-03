@@ -8,7 +8,6 @@
 # type (options: deb, rpm, tgz, pacman, all, none)
 
 # Usage:
-# Best invoked via package.json
 # ./bundle.sh (type)
 
 # Returns:
