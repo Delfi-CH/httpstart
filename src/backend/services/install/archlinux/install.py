@@ -125,6 +125,8 @@ def enable_sudo():
 def setup_users(users):
     for u in users:
         name = u["username"]
+        if (name == "root"):
+            break
         password = u.get("password", "changeme")
         use_sudo = u.get("sudo", False)
 
