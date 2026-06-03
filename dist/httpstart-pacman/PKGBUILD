@@ -33,4 +33,5 @@ package() {
     cp -r dist/node_modules "$pkgdir/usr/share/httpstart/"
 
     install -Dm755 dist/httpstart.service -t "$pkgdir/usr/lib/systemd/system/"
+    install -m 755 src/backend/services/install/archlinux/install.py /usr/share/httpstart/
 }
