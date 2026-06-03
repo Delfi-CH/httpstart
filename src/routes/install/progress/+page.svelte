@@ -1,29 +1,25 @@
 <script lang="ts">
+    import { ProgressObject } from "$lib/data";
     import { onMount } from "svelte";
-    import axios from "axios";
-    import { Data } from "$lib/data"
-    import DynamicTerminal from "svelte-htmshell/dynamic";
+    import { Progress } from "@sveltestrap/sveltestrap";
 
     let serverURL = $state("");
-    let data = $state(Data.load());
+    let progress: ProgressObject = $state(new ProgressObject("No Progress", 0, false))
 
-    let showTerminal = $state(false)
-
-    onMount(() => {
-        data = Data.load();
+    onMount(()=>{
         const mode = import.meta.env.MODE;
 
         if (mode === "development") {
             serverURL = "http://localhost:29222";
         }
-    });
 
-    onMount(async()=>{
-        await axios.post(serverURL + "/api/install", {
-            data,
-        });
-        showTerminal = true
+        const sse = new EventSource(serverURL + "/api/install/progress")
+
+        sse.onmessage = (event) => {
+            console.log(JSON.parse(event.data))
+        }
     })
 </script>
 
-{#if showTerminal}<DynamicTerminal url={serverURL + "/api/shell"}></DynamicTerminal>{/if}
+<p>{progress.name}</p>
+<Progress animated={true} color="primary" bind:value={progress.progress}></Progress>

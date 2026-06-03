@@ -2,9 +2,11 @@
     import { Container, Row, Col, Button } from "@sveltestrap/sveltestrap";
     import { Data, User, Disk, DiskType, Distribution } from "$lib/data";
     import { onMount } from "svelte";
+    import axios from 'axios';
     import { goto } from "$app/navigation";
     import { resolve } from "$app/paths";
 
+    let serverURL = $state("");
     let data = $state(Data.load());
 
     let allIsOk = $state(false);
@@ -14,6 +16,11 @@
 
     onMount(() => {
         data = Data.load();
+        const mode = import.meta.env.MODE;
+
+        if (mode === "development") {
+            serverURL = "http://localhost:29222";
+        }
     });
 
     $effect(() => {
@@ -144,7 +151,10 @@
         </Row>
         <Row>
             <Col>
-                <Button color="danger" size="lg" disabled={!allIsOk} onclick={()=>{
+                <Button color="danger" size="lg" disabled={!allIsOk} onclick={async ()=>{
+                    await axios.post(serverURL + "/api/install/data", {
+                        data,
+                    });
                     goto(resolve("/install/progress"))
                 }}>Start Installation</Button>
             </Col>

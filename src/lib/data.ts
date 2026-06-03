@@ -182,6 +182,17 @@ enum DistroPackageQueryUrl {
     Other = "/"
 }
 
+class ProgressObject {
+    name: string
+    progress: number
+    finished: boolean
+    constructor(name: string, progress: number, finished: boolean) {
+        this.name = name
+        this.progress = progress
+        this.finished = finished
+    }
+}
+
 const httpstartVersion = "0.1.0"
 
-export { Data, Disk, User, Filesystem, DiskType, ParentDisk, Distribution, httpstartVersion, PackageRepository, PackageGroup, DistroPackageQueryUrl }
+export { Data, Disk, User, Filesystem, DiskType, ParentDisk, Distribution, httpstartVersion, PackageRepository, PackageGroup, DistroPackageQueryUrl, ProgressObject }

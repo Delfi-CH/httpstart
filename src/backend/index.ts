@@ -7,7 +7,8 @@ import { getIpAdress } from "./services/getIp.ts";
 import { getPackageGroups, getRepos, queryPackages } from "./services/getPackages.ts";
 import { createServer } from "http";
 import { setupHtmshell } from "express-htmshell";
-import { beginInstall } from "./services/install/doInstall.ts";
+import { beginInstall, validateData } from "./services/install/doInstall.ts";
+import { Data, Distribution, ProgressObject } from "../lib/data"
 
 const app = express()
 const server = createServer(app)
@@ -17,6 +18,8 @@ app.use("/ui", express.static(argv[3]))
 
 const port = Number(argv[2]);
 let installInProgress = false
+
+let data: Data = new Data("", "", "", [], "", [], [], [], Distribution.Other)
 
 app.get("/", (req,res)=>{
     res.redirect("/ui")
@@ -53,15 +56,49 @@ app.post("/api/pkg/query", async (req, res) =>{
     res.send(result)
 })
 
-app.post("/api/install", (req, res)=>{
-    const data = req.body.data
+app.post("/api/install/data", (req, res)=>{
+    const tempData = req.body.data
+    if (!validateData(tempData)) {
+        res.sendStatus(400)
+        return
+    }
     if (installInProgress) {
         res.sendStatus(226)
+        return
     } else {
         installInProgress = true
-        beginInstall(data)
+        data = tempData
         res.sendStatus(201)
+        return
     }
+})
+
+app.get("/api/install/progress", (req, res)=>{
+    if (!validateData(data)) {
+        res.sendStatus(400)
+        return
+    } else if (!installInProgress) {
+        res.sendStatus(400)
+        return
+    }
+
+    // SSE Code from some dude on StackOverflow
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
+
+    beginInstall(data, (progress: ProgressObject) => {
+        res.write(JSON.stringify(progress))
+    })
+
+    res.on("close", ()=>{
+        console.log("SSE on /api/install/progress dropped!")
+        installInProgress = false
+        res.end()
+        return
+    })
 })
 
 setupHtmshell(server, "/api/shell")
