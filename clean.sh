@@ -5,7 +5,7 @@
 # Script for cleaning up the bundeling of the linux-web-installer
 
 # Params:
-# type (options: deb, rpm, tgz, pacman, all, none)
+# type (options: deb, rpm, tgz, pacman, archiso, all, none)
 
 # Usage:
 # Best invoked via package.json
@@ -93,7 +93,7 @@ if [ "$type" == "tgz" ] || [ "$type" == "all" ]; then
     echo "Deleting tar.gz specific files was sucessfull!"
 fi
 
-if [ "$type" == "pacman" ] || [ "$type" == "all" ]; then
+if [ "$type" == "pacman" ] || [ "$type" == "all" ] || [ "$type" == "archiso" ]; then
     echo "Deleting Arch Linux specific files..."
     rm -f dist/httpstart-*.pkg.tar.zst
     status=$?
@@ -125,4 +125,24 @@ if [ "$type" == "pacman" ] || [ "$type" == "all" ]; then
 
     echo "Deleting Arch Linux specific files was sucessfull!"
 fi
+
+if [ "$type" == "archiso" ] || [ "$type" == "all" ]; then
+    echo "Deleting Archiso specific files.."
+    sudo rm -rf dist/httpstart-archlive/out
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "Deleting Archiso specific files failed!"
+        exit 1
+    fi
+
+    sudo rm -rf dist/httpstart-archlive/work
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "Deleting Archiso specific files failed!"
+        exit 1
+    fi
+
+    echo "Deleting Archiso specific files was sucessfull!"
+fi
+
 exit 0

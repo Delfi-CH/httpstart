@@ -5,7 +5,7 @@
 # Script for bundeling the linux-web-installer
 
 # Params:
-# type (options: deb, rpm, tgz, pacman, all, none)
+# type (options: deb, rpm, tgz, pacman, archiso, all, none)
 
 # Usage:
 # ./bundle.sh (type)
@@ -225,7 +225,21 @@ bundle_pacman () {
 
     echo "Creating local Repository..."
 
-    repo-add /tmp/httpstart.db.tar.zst httpstart-*.pkg.tar.zst &> /dev/null
+    mkdir /tmp/httpstart &> /dev/null
+    if [ "$status" != 0 ]; then
+        echo "Creating local Repository failed!"
+        echo "Aborting..."
+        exit 1
+    fi
+
+    cp httpstart-*.pkg.tar.zst /tmp/httpstart/ &> /dev/null
+    if [ "$status" != 0 ]; then
+        echo "Creating local Repository failed!"
+        echo "Aborting..."
+        exit 1
+    fi
+
+    repo-add /tmp/httpstart/httpstart.db.tar.zst httpstart-*.pkg.tar.zst &> /dev/null
     if [ "$status" != 0 ]; then
         echo "Creating local Repository failed!"
         echo "Aborting..."
@@ -244,6 +258,34 @@ bundle_pacman () {
     echo "Copying Package was sucessfull"
 }
 
+bundle_archiso () {
+    echo "Bundeling for Arch Linux (pacman)..."
+    bundle_pacman
+
+    echo "Testing for mkarchiso..."
+    type mkarchiso &> /dev/null
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "mkarchiso wasnt found in \$PATH!"
+        echo "Aborting..."
+        exit 1
+    fi
+    echo "mkarchiso was found!"
+
+    echo "Creating iso..."
+    pushd dist/httpstart-archlive &> /dev/null || exit 1
+
+    sudo mkarchiso -A archlinux-httpstart -L archlinux-httpstart -P httpstart . &> /dev/null
+    status=$?
+    if [ "$status" != 0 ]; then
+        echo "iso creation failed!"
+        echo "Aborting..."
+        exit 1
+    fi
+    echo "iso creation was sucessfull!"
+
+}
+
 if [ "$type" == "deb" ] || [ "$type" == "all" ]; then
     echo "Bundeling for Debian (dpkg)..."
     bundle_debian
@@ -257,4 +299,9 @@ fi
 if [ "$type" == "pacman" ] || [ "$type" == "all" ]; then
     echo "Bundeling for Arch Linux (pacman)..."
     bundle_pacman
+fi
+
+if [ "$type" == "archiso" ] || [ "$type" == "all" ]; then
+    echo "Creating ArchLinux Live iso (archiso)..."
+    bundle_archiso
 fi

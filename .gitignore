@@ -36,3 +36,7 @@ vite.config.ts.timestamp-*
 
 /dist/httpstart-pacman/*
 !/dist/httpstart-pacman/PKGBUILD
+
+/dist/httpstart-archlive/work
+
+*.iso
