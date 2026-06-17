@@ -7,7 +7,7 @@ import subprocess
 
 
 def run(cmd):
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
 
 def load_json(arg, name):
@@ -82,13 +82,14 @@ def install_base(packages):
 
 def generate_fstab():
     with open("/mnt/etc/fstab", "w") as f:
-        subprocess.run(["genfstab", "-U", "/mnt"], stdout=f, check=True)
+        subprocess.run(["genfstab", "-U", "/mnt"], stdout=f, stderr=subprocess.DEVNULL, check=True)
 
 def chroot(cmd, input_data=None):
     subprocess.run(
         ["arch-chroot", "/mnt", *cmd],
         stdin=input_data,
-        check=True
+        check=True,
+        stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL
     )
 
 def run_firstboot(language, timezone, hostname):
@@ -106,7 +107,7 @@ def run_firstboot(language, timezone, hostname):
     # optional but useful defaults
     cmd += ["--keymap", "us"]
 
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
 def enable_sudo():
     sudoers_file = "/etc/sudoers.d/wheel"
@@ -190,24 +191,26 @@ def main():
     users = load_json(args.users, "users")
     disks = load_json(args.disks, "disks")
 
-    print(args.language, args.timezone, args.hostname)
-    print(packages)
-    print(users)
-    print(disks)
-
+    print("Checking for prerequisites")
     check_root()
     check_uefi()
     check_internet()
 
+    print("Formatting Disks")
     format_and_mount(disks)
+    
+    print("Installing Packages")
     install_base(packages)
     generate_fstab()
 
+    print("Running systemd fistboot")
     run_firstboot(normalize_locale(args.language), args.timezone, args.hostname)
     setup_users(users)
 
+    print("Generating initcpio")
     chroot(["mkinitcpio", "-P"])
 
+    print("Installing Grub")
     install_grub(disks)
 
 if __name__ == "__main__":

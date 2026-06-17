@@ -1,7 +1,7 @@
 <script lang="ts">
     import { ProgressObject } from "$lib/data";
     import { onMount } from "svelte";
-    import { Progress } from "@sveltestrap/sveltestrap";
+    import { Progress, Container, Row, Col, Spinner } from "@sveltestrap/sveltestrap";
 
     let serverURL = $state("");
     let progress: ProgressObject = $state(new ProgressObject("No Progress", 0, false))
@@ -21,5 +21,12 @@
     })
 </script>
 
-<p>{progress.name}</p>
-<Progress animated={true} color="primary" bind:value={progress.progress}></Progress>
+<Container>
+    <Row>
+        <Col>
+            <p>{progress.name}</p>
+            <Spinner color="primary" type="border"></Spinner>
+            <Progress animated={true} color="primary" bind:value={progress.progress}></Progress>
+        </Col>
+    </Row>
+</Container>
